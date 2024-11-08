@@ -10,5 +10,10 @@ urlpatterns = [
     path("test_token", views.test_token),
     path("department", views.get_departments),
     path("department/<int:id>", views.get_department_by_id),
+    path("role", views.get_roles),
+    path("role/<int:id>", views.get_role_by_id),
+    path("employee", views.get_employees),
+    path("employee/<int:id>", views.get_employee_by_id),
+    path("services", views.get_services),
 
 ]

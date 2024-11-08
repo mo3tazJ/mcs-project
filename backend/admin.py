@@ -11,6 +11,10 @@ class EmployeeAdmin(admin.ModelAdmin):
     list_filter = ("department", "role",)
     list_display = ("__str__", "username", "department",
                     "role", "mobile", "email")
+    fields = ["username", "password", "mobile", "first_name", "last_name", "email", "department",
+              "role", "about", "is_superuser", "is_staff", "is_active", "date_joined", "last_login"]
+    # , "group", "permision"
+    readonly_fields = ["date_joined", "last_login"]
 
 
 class DeviceAdmin(admin.ModelAdmin):

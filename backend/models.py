@@ -292,11 +292,12 @@ class Service(models.Model):
 class Feedback(models.Model):
 
     name = models.CharField("Feedback Name", max_length=100)
+    service = models.OneToOneField(Service, verbose_name=(
+        "Service"), on_delete=models.CASCADE)
     rate = models.IntegerField(
         "Rate", validators=[MinValueValidator(1), MaxValueValidator(5)])
     review = models.TextField(blank=True)  # , null=True
-    service = models.OneToOneField(Service, verbose_name=(
-        "Service"), on_delete=models.CASCADE)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

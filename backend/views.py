@@ -16,6 +16,9 @@ def index(request):
     return render(request, "backend/index.html")
 
 
+##########################
+# Login And Authintication
+##########################
 @api_view(['POST'])
 def log_in(request):
     employee = get_object_or_404(Employee, username=request.data['username'])
@@ -48,6 +51,10 @@ def test_token(request):
     return Response({"department": deptserializer.data['name']})
 
 
+##############
+# Models APIs
+
+# Department:
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
@@ -61,6 +68,70 @@ def get_departments(request):
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def get_department_by_id(request, id):
-    department = get_object_or_404(Department, id=id)
-    deptserializer = DepartmentSerializer(department)
-    return Response({"department": deptserializer.data, "name": deptserializer.data['name']})
+    department = get_object_or_404(Department, pk=id)
+    serialized = DepartmentSerializer(department)
+    return Response({"department": serialized.data, "name": serialized.data['name']})
+
+
+# Role:
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def get_roles(request):
+    roles = Role.objects.all()
+    serialized = RoleSerializer(roles, many=True)
+    return Response({"roles": serialized.data})
+
+
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def get_role_by_id(request, id):
+    role = get_object_or_404(Role, pk=id)
+    serialized = RoleSerializer(role)
+    return Response({"role": serialized.data})
+
+
+# Employee:
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def get_employees(request):
+    employees = Employee.objects.all()
+    serialized = EmployeeSerializer(employees, many=True)
+    return Response({"employees": serialized.data})
+
+
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def get_employee_by_id(request, id):
+    employee = get_object_or_404(Employee, pk=id)
+    deptserialized = DepartmentSerializer(employee.department)
+    roleserialized = RoleSerializer(employee.role)
+    empdevices = Device.objects.filter(employee=id)
+    deviceserialized = DeviceSerializer(empdevices, many=True)
+    serialized = EmployeeSerializer(employee)
+    return Response({"employee": serialized.data, "department": deptserialized.data, "role": roleserialized.data, "devices": deviceserialized.data})
+
+
+# Service:
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def get_services(request):
+    services = Service.objects.all()
+    serialized = ServiceSerializer(services, many=True)
+    return Response({"services": serialized.data, "echo": request.data})
+
+
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def get_service_by_id(request, id):
+    service = get_object_or_404(Service, pk=id)
+    serialized = ServiceSerializer(service)
+    return Response({"service": serialized.data})
+
+
+# Feedback:
