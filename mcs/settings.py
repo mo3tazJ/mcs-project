@@ -8,12 +8,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# Production Stage
+# SECRET_KEY = getenv("SECRET-KEY")
+# Developing Stage
 SECRET_KEY = 'django-insecure-vo66ta73(a2!a=h+_!xklgmoti^$qnmvk6-ah7$15uj@*fssjx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# In Production stage IS_DEVLOPMENT is set to Flase So DEBUG = False
+DEBUG = getenv("IS_DEVELOPMENT", True)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "*",
+    getenv("APP_HOST")
+]
 
 
 # Application definition
@@ -64,10 +71,11 @@ WSGI_APPLICATION = 'mcs.wsgi.application'
 
 # Database
 
+# External Host
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'mcstest',
+#         'NAME': 'mcstest0',
 #         'USER': 'root',
 #         'PASSWORD': 'root',
 #         'HOST': 'localhost',
@@ -108,7 +116,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# TIME_ZONE = 'UTC' # Default TimeZone
+
+TIME_ZONE = 'Asia/Riyadh'
 
 USE_I18N = True
 
@@ -118,6 +128,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
+# Use manage.py collectstatic to collect all static files to this folder
+STATIC_ROOT = BASE_DIR / "staticfiles"
 STATIC_URL = 'static/'
 
 # Default primary key field type
