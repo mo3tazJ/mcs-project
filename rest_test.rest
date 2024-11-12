@@ -28,7 +28,7 @@ Authorization: token c21e535cd341746ce33e4ca2343542d4a5e39621
 {}
 
 ###
-GET http://127.0.0.1:8000/employee
+GET http://127.0.0.1:8000/employee/5
 Content-Type: application/json
 Authorization: token c21e535cd341746ce33e4ca2343542d4a5e39621
 

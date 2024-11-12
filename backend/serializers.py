@@ -13,19 +13,25 @@ class UserSerializer(serializers.ModelSerializer):
 class DepartmentSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = Department
-        fields = "__all__"
+        # fields = "__all__"
+        exclude = ['created_at', 'updatet_at']
 
 
 class RoleSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = Role
-        fields = "__all__"
+        # fields = "__all__"
+        exclude = ['created_at', 'updatet_at']
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
+    department = DepartmentSerializer()
+    role = RoleSerializer()
+
     class Meta(object):
         model = Employee
-        fields = "__all__"
+        exclude = ['created_at', 'updatet_at', 'password']
+        # fields = "__all__"
         # fields = ['id', 'username', 'password', 'email', 'first_name', 'last_name',
         #           'is_superuser', 'is_staff', 'department', 'role', 'mobile', 'about']
 

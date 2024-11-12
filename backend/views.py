@@ -47,7 +47,7 @@ def log_out(request):
 def test_token(request):
     employee = get_object_or_404(Employee, username=request.data['username'])
     deptserializer = DepartmentSerializer(employee.department)
-    return Response({"department": deptserializer.data['name']})
+    return Response({"department": deptserializer.data['name']}, status=status.HTTP_200_OK)
 
 
 ##############
@@ -73,7 +73,7 @@ def get_department_by_id(request, id):
 
 
 # Role:
-@api_view(['GET'])
+@api_view(['GET', 'POST', 'PUT', 'DELETE'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def get_roles(request):
@@ -103,7 +103,7 @@ def get_employees(request):
 
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
-@permission_classes([IsAuthenticated, IsAdminUser])
+@permission_classes([IsAuthenticated])  # , IsAdminUser
 def get_employee_by_id(request, id):
     employee = get_object_or_404(Employee, pk=id)
     deptserialized = DepartmentSerializer(employee.department)
