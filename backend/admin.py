@@ -32,6 +32,9 @@ class ServiceAdmin(admin.ModelAdmin):
     list_filter = ("servie_type", "servie_location", "priority_level", "state")
     list_display = ("name", "employee", "worker", "device", "state",
                     "servie_type", "servie_location", "priority_level")
+    # fields = ["name", "employee", "servie_type", "subtype", "device", "description",
+    #           "servie_location", "priority_level", "worker", "diagnose", "solution",
+    #           "notes", "state", "state_changed", "pending_at", "rejected_at", "approved_at", "started_at", "ended_at", "closed_at", "archived_at", "estimated_time"]
 
 
 class FeedbackAdmin(admin.ModelAdmin):
@@ -49,7 +52,7 @@ admin.site.register(Device, DeviceAdmin)
 admin.site.register(Accessory, AccessoryAdmin)
 admin.site.register(ServiceType)
 admin.site.register(ServiceLocation)
-admin.site.register(Complaint)
+admin.site.register(Subtype)
 admin.site.register(PriorityLevel)
 admin.site.register(Service, ServiceAdmin)
 admin.site.register(Feedback, FeedbackAdmin)

@@ -39,58 +39,86 @@ class EmployeeSerializer(serializers.ModelSerializer):
 class DeviceTypeSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = DeviceType
-        fields = "__all__"
+        # fields = "__all__"
+        exclude = ['created_at', 'updatet_at']
 
 
 class AccessoryTypeSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = AccessoryType
-        fields = "__all__"
+        # fields = "__all__"
+        exclude = ['created_at', 'updatet_at']
 
 
 class DeviceSerializer(serializers.ModelSerializer):
+    device_type = DeviceTypeSerializer()
+    employee = EmployeeSerializer()
+
     class Meta(object):
         model = Device
-        fields = "__all__"
+        # fields = "__all__"
+        exclude = ['created_at', 'updatet_at']
 
 
 class AccessorySerializer(serializers.ModelSerializer):
+    accessory_type = AccessoryTypeSerializer()
+    device = DeviceSerializer()
+
     class Meta(object):
         model = Accessory
-        fields = "__all__"
+        # fields = "__all__"
+        exclude = ['created_at', 'updatet_at']
 
 
 class ServiceTypeSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = ServiceType
-        fields = "__all__"
+        # fields = "__all__"
+        exclude = ['created_at', 'updatet_at']
 
 
 class ServiceLocationSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = ServiceLocation
-        fields = "__all__"
+        # fields = "__all__"
+        exclude = ['created_at', 'updatet_at']
 
 
-class ComplaintSerializer(serializers.ModelSerializer):
+class SubtypeSerializer(serializers.ModelSerializer):
     class Meta(object):
-        model = Complaint
-        fields = "__all__"
+        model = Subtype
+        # fields = "__all__"
+        exclude = ['created_at', 'updatet_at']
 
 
 class PriorityLevelSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = PriorityLevel
-        fields = "__all__"
+        # fields = "__all__"
+        exclude = ['created_at', 'updatet_at']
 
 
 class ServiceSerializer(serializers.ModelSerializer):
+
+    employee = EmployeeSerializer()
+    worker = EmployeeSerializer()
+    device = DeviceSerializer()
+    servie_type = ServiceTypeSerializer()
+    servie_location = ServiceLocationSerializer()
+    priority_level = PriorityLevelSerializer()
+    subtype = SubtypeSerializer()
+
     class Meta(object):
         model = Service
-        fields = "__all__"
+        # fields = ['name', 'employee']
+        exclude = ['created_at', 'updatet_at']
 
 
 class FeedbackSerializer(serializers.ModelSerializer):
+
+    service = ServiceSerializer()
+
     class Meta(object):
         model = Feedback
-        fields = "__all__"
+        # fields = "__all__"
+        exclude = ['created_at', 'updatet_at']

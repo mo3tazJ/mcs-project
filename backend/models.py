@@ -9,7 +9,7 @@ from django.urls import reverse
 
 class Department(models.Model):
 
-    name = models.CharField("Department Name", max_length=100)
+    name = models.CharField("Department Name", max_length=100, unique=True)
     phone = models.CharField("Phone", max_length=100)
     address = models.CharField("Address", max_length=100)
     created_at = models.DateTimeField("Created", auto_now_add=True)
@@ -28,7 +28,7 @@ class Department(models.Model):
 
 class Role(models.Model):
 
-    name = models.CharField("User Role", max_length=100)
+    name = models.CharField("User Role", max_length=100, unique=True)
     created_at = models.DateTimeField("Created", auto_now_add=True)
     updatet_at = models.DateTimeField("Updated", auto_now=True)
 
@@ -46,7 +46,7 @@ class Role(models.Model):
 class Employee(User):
 
     # Employee Fields
-    mobile = models.CharField("Mobile No.", max_length=25)
+    mobile = models.CharField("Mobile No.", max_length=25, unique=True)
     department = models.ForeignKey(Department, verbose_name=(
         "Department"), on_delete=models.SET_NULL, related_name="employees", null=True, blank=True)
     role = models.ForeignKey(Role, verbose_name=(
@@ -73,7 +73,7 @@ class Employee(User):
 
 class DeviceType(models.Model):
 
-    name = models.CharField("Device Type", max_length=100)
+    name = models.CharField("Device Type", max_length=100, unique=True)
     created_at = models.DateTimeField("Created", auto_now_add=True)
     updatet_at = models.DateTimeField("Updated", auto_now=True)
 
@@ -90,7 +90,7 @@ class DeviceType(models.Model):
 
 class AccessoryType(models.Model):
 
-    name = models.CharField("Accessory Type", max_length=100)
+    name = models.CharField("Accessory Type", max_length=100, unique=True)
     created_at = models.DateTimeField("Created", auto_now_add=True)
     updatet_at = models.DateTimeField("Updated", auto_now=True)
 
@@ -109,19 +109,19 @@ class Device(models.Model):
 
     name = models.CharField("Device", max_length=100)
     brand = models.CharField("Brand", max_length=100)
-    model = models.CharField("Model", max_length=100,
-                             blank=True)  # , null=True
-    sn = models.CharField("Serial Number", max_length=100, blank=True)
-    os = models.CharField("Operating System", max_length=100)
-    anydesk = models.CharField(
-        "AnyDesk Address", max_length=100, blank=True)
-    specs = models.TextField("Technical Specifications", blank=True)
-    notes = models.TextField("Notes", blank=True)
-    is_active = models.BooleanField(default=True)
+    model = models.CharField("Model", max_length=100, blank=True)
     device_type = models.ForeignKey(DeviceType, verbose_name=(
         "Device Type"), on_delete=models.SET_NULL, related_name="devices", null=True, blank=True)
     employee = models.ForeignKey(Employee, verbose_name=(
         "Employee"), on_delete=models.SET_NULL, related_name="devices", null=True, blank=True)
+    sn = models.CharField("Serial Number", max_length=100, blank=True)
+    os = models.CharField("Operating System", max_length=100, blank=True)
+    specs = models.TextField("Technical Specifications", blank=True)
+    anydesk = models.CharField(
+        "AnyDesk Address", max_length=100, blank=True)
+    notes = models.TextField("Notes", blank=True)
+    is_active = models.BooleanField(default=True)
+
     created_at = models.DateTimeField("Created", auto_now_add=True)
     updatet_at = models.DateTimeField("Updated", auto_now=True)
 
@@ -141,12 +141,12 @@ class Accessory(models.Model):
     name = models.CharField("Accessory", max_length=100)
     brand = models.CharField("Brand", max_length=100)
     model = models.CharField("Model", max_length=100, blank=True)
-    sn = models.CharField("Serial Number", max_length=100, blank=True)
-    notes = models.TextField("Notes", blank=True)
     accessory_type = models.ForeignKey(AccessoryType, verbose_name=(
         "Accessory Type"), on_delete=models.SET_NULL, related_name="accessories", null=True, blank=True)
     device = models.ForeignKey(Device, verbose_name=(
         "Linked Device"), on_delete=models.SET_NULL, related_name="accessories", null=True, blank=True)
+    sn = models.CharField("Serial Number", max_length=100, blank=True)
+    notes = models.TextField("Notes", blank=True)
 
     created_at = models.DateTimeField("Created", auto_now_add=True)
     updatet_at = models.DateTimeField("Updated", auto_now=True)
@@ -164,7 +164,7 @@ class Accessory(models.Model):
 
 class ServiceType(models.Model):
 
-    name = models.CharField("Service Type", max_length=100)
+    name = models.CharField("Service Type", max_length=100, unique=True)
     created_at = models.DateTimeField("Created", auto_now_add=True)
     updatet_at = models.DateTimeField("Updated", auto_now=True)
 
@@ -181,7 +181,7 @@ class ServiceType(models.Model):
 
 class ServiceLocation(models.Model):
 
-    name = models.CharField("Service Location", max_length=100)
+    name = models.CharField("Service Location", max_length=100, unique=True)
     created_at = models.DateTimeField("Created", auto_now_add=True)
     updatet_at = models.DateTimeField("Updated", auto_now=True)
 
@@ -196,26 +196,26 @@ class ServiceLocation(models.Model):
         return reverse("ServiceLocation_detail", kwargs={"pk": self.pk})
 
 
-class Complaint(models.Model):
+class Subtype(models.Model):  # Rename it to Subtype
 
-    name = models.CharField("Complaint", max_length=100)
+    name = models.CharField("Subtype", max_length=100, unique=True)
     created_at = models.DateTimeField("Created", auto_now_add=True)
     updatet_at = models.DateTimeField("Updated", auto_now=True)
 
     class Meta:
-        verbose_name = ("Complaint")
-        verbose_name_plural = ("Complaints")
+        verbose_name = ("Subtype")
+        verbose_name_plural = ("Subtypes")
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
-        return reverse("Complaint_detail", kwargs={"pk": self.pk})
+        return reverse("Subtype_detail", kwargs={"pk": self.pk})
 
 
 class PriorityLevel(models.Model):
 
-    name = models.CharField("Priority Level", max_length=100)
+    name = models.CharField("Priority Level", max_length=100, unique=True)
     created_at = models.DateTimeField("Created", auto_now_add=True)
     updatet_at = models.DateTimeField("Updated", auto_now=True)
 
@@ -237,25 +237,27 @@ class Service(models.Model):
 
     employee = models.ForeignKey(Employee, verbose_name=(
         "Employee"), on_delete=models.SET_NULL, related_name="empservices", null=True)
-    worker = models.ForeignKey(Employee, verbose_name=(
-        "Worker"), on_delete=models.SET_NULL, related_name="wrkservices", null=True, blank=True)
     device = models.ForeignKey(Device, verbose_name=(
         "Device"), on_delete=models.SET_NULL, related_name="services", null=True, blank=True)
     servie_type = models.ForeignKey(ServiceType, verbose_name=(
         "Service Type"), on_delete=models.SET_NULL, related_name="services", null=True)
+    subtype = models.ForeignKey(Subtype, verbose_name=(
+        "Subtype"), on_delete=models.SET_NULL, related_name="services", blank=True, null=True)
     servie_location = models.ForeignKey(ServiceLocation, verbose_name=(
         "Service Location"), on_delete=models.SET_NULL, related_name="services", null=True)
     priority_level = models.ForeignKey(PriorityLevel, verbose_name=(
         "Priority Level"), on_delete=models.SET_NULL, related_name="services", null=True)
-    complaint = models.ForeignKey(Complaint, verbose_name=(
-        "Complaint"), on_delete=models.SET_NULL, related_name="services", blank=True, null=True)
+    worker = models.ForeignKey(Employee, verbose_name=(
+        "Worker"), on_delete=models.SET_NULL, related_name="wrkservices", null=True, blank=True)
 
     diagnose = models.TextField("Diagnose", blank=True)
     solution = models.TextField("Solution", blank=True)
+    notes = models.TextField("Notes", blank=True)
 
     STATUS = Choices('pending', 'rejected', 'approved',
                      'started', 'ended', 'closed', 'archived')
     state = StatusField()
+    state_changed = MonitorField(monitor='state')
     pending_at = MonitorField(monitor='state', when=['pending'])
     rejected_at = MonitorField(monitor='state', when=[
                                'rejected'], default=None, blank=True, null=True)
@@ -269,12 +271,9 @@ class Service(models.Model):
                              'closed'], default=None, blank=True, null=True)
     archived_at = MonitorField(monitor='state', when=[
                                'archived'], default=None, blank=True, null=True)
-    state_changed = MonitorField(monitor='state')
-
     estimated_time = models.DecimalField(
         "Estimated Time", max_digits=10, decimal_places=2, blank=True, null=True)
 
-    notes = models.TextField("Notes", blank=True)
     created_at = models.DateTimeField("Created", auto_now_add=True)
     updatet_at = models.DateTimeField("Updated", auto_now=True)
 

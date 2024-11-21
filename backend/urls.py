@@ -14,6 +14,7 @@ urlpatterns = [
     path("role/<int:id>", views.get_role_by_id),
     path("employee", views.get_employees),
     path("employee/<int:id>", views.get_employee_by_id),
-    path("services", views.get_services),
+    path("service", views.get_services),
+    path("service/<int:id>", views.get_service_by_id),
 
 ]

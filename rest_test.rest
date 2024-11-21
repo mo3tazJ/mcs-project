@@ -35,8 +35,15 @@ Authorization: token c21e535cd341746ce33e4ca2343542d4a5e39621
 {}
 
 ###
-GET http://127.0.0.1:8000/services
+GET http://127.0.0.1:8000/service
 Content-Type: application/json
 Authorization: token c21e535cd341746ce33e4ca2343542d4a5e39621
 
 {"id": 1 ,"message": "Echo Back", "hint": "Get me back"}
+
+###
+GET http://127.0.0.1:8000/service/1
+Content-Type: application/json
+Authorization: token c21e535cd341746ce33e4ca2343542d4a5e39621
+
+{"message": "Echo Back", "hint": "Get me back"}
