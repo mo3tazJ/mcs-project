@@ -253,6 +253,7 @@ class Service(models.Model):
     diagnose = models.TextField("Diagnose", blank=True)
     solution = models.TextField("Solution", blank=True)
     notes = models.TextField("Notes", blank=True)
+    reason = models.TextField("Notes", blank=True)
 
     STATUS = Choices('pending', 'rejected', 'approved',
                      'started', 'ended', 'closed', 'archived')

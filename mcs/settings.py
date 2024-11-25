@@ -1,5 +1,11 @@
 from pathlib import Path
-from os import getenv
+# from unipath import Path
+from decouple import config
+# from unipath import Path
+from dj_database_url import parse as db_url
+
+import os
+# from os import getenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -8,18 +14,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# Production Stage
-# SECRET_KEY = getenv("SECRET-KEY")
-# Developing Stage
-SECRET_KEY = 'django-insecure-vo66ta73(a2!a=h+_!xklgmoti^$qnmvk6-ah7$15uj@*fssjx'
+
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # In Production stage IS_DEVLOPMENT is set to Flase So DEBUG = False
-DEBUG = getenv("IS_DEVELOPMENT", True)
+
+# DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = [
     "*",
-    getenv("APP_HOST")
 ]
 
 
@@ -91,6 +96,14 @@ DATABASES = {
     }
 }
 
+# Python Decouple Settings
+# DATABASES = {
+#     'default': config(
+#         'DATABASE_URL',
+#         default='sqlite:///' + BASE_DIR.child('db1.sqlite3'),
+#         cast=db_url
+#     )
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
