@@ -52,6 +52,8 @@ class Employee(User):
     role = models.ForeignKey(Role, verbose_name=(
         "Role"), on_delete=models.SET_NULL, related_name="employees", null=True, blank=True)
     about = models.TextField(blank=True)  # , null=True
+    fcm_token = models.CharField(
+        "FCM Token", max_length=255, null=True, blank=True)
     created_at = models.DateTimeField("Created", auto_now_add=True)
     updatet_at = models.DateTimeField("Updated", auto_now=True)
 
@@ -253,7 +255,7 @@ class Service(models.Model):
     diagnose = models.TextField("Diagnose", blank=True)
     solution = models.TextField("Solution", blank=True)
     notes = models.TextField("Notes", blank=True)
-    reason = models.TextField("Notes", blank=True)
+    reason = models.TextField("Reason", blank=True)
 
     STATUS = Choices('pending', 'rejected', 'approved',
                      'started', 'ended', 'closed', 'archived')
