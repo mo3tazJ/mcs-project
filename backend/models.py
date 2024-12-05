@@ -58,6 +58,9 @@ class Employee(User):
     created_at = models.DateTimeField("Created", auto_now_add=True)
     updatet_at = models.DateTimeField("Updated", auto_now=True)
 
+    def fullname(self):
+        return (self.first_name + self.last_name)
+
     class Meta:
         verbose_name = ("Employee")
         verbose_name_plural = ("Employees")

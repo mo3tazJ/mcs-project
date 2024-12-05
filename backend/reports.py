@@ -1,7 +1,7 @@
 from .models import *
 from .serializers import *
 # Slick Reporting
-from django.db.models import Sum, Count
+from django.db.models import Sum, Count, Avg, Max, Min
 from slick_reporting.views import ReportView, Chart
 from slick_reporting.fields import ComputationField
 
@@ -36,6 +36,43 @@ class ServiceReport(ReportView):
             data_source=["count_value"],
             title_source=["state"],
         ),
+    ]
+
+
+class ServiceByTechReport(ReportView):
+    report_model = Service
+    date_field = "created_at"
+    group_by = "worker__first_name"
+
+    columns = [
+        "worker__first_name",
+        ComputationField.create(
+            Count, "id", name="count", verbose_name="Tech Services"
+        ),
+        ComputationField.create(
+            Avg, "feedback__rate", name="avg", verbose_name="Average Rate", is_summable=False
+        )
+    ]
+    chart_settings = [
+        Chart(
+            "Services Count By Tech [BAR Chart]",
+            Chart.BAR,
+            data_source=["count"],
+            title_source=["worker__first_name"],
+        ),
+        Chart(
+            "Tech Average Rating[BAR Chart]",
+            Chart.BAR,
+            data_source=["avg"],
+            title_source=["worker__first_name"],
+        ),
+        Chart(
+            "Services Count By Tech [PIE Chart]",
+            Chart.PIE,
+            data_source=["count"],
+            title_source=["worker__first_name"],
+        ),
+
     ]
 
 

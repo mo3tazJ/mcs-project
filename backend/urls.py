@@ -18,6 +18,7 @@ urlpatterns = [
     path("service/<int:id>", views.get_service_by_id),
     path("stats", stats.get_stats),
     path("reports/service", reports.ServiceReport.as_view()),
+    path("reports/service-tech", reports.ServiceByTechReport.as_view()),
     path("reports/feedback", reports.FeedbackReport.as_view()),
     path("reports/device", reports.DeviceReport.as_view()),
 
