@@ -46,7 +46,8 @@ class Role(models.Model):
 class Employee(User):
 
     # Employee Fields
-    mobile = models.CharField("Mobile No.", max_length=25, unique=True)
+    mobile = models.CharField("Mobile No.", max_length=25, unique=True, help_text=(
+        "Mobile Number Format Example: 0999123456"))
     department = models.ForeignKey(Department, verbose_name=(
         "Department"), on_delete=models.SET_NULL, related_name="employees", null=True, blank=True)
     role = models.ForeignKey(Role, verbose_name=(
@@ -312,3 +313,4 @@ class Feedback(models.Model):
 
     def get_absolute_url(self):
         return reverse("Feedback_detail", kwargs={"pk": self.pk})
+        # return reverse("feedback-report")

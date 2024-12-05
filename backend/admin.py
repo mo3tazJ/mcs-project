@@ -10,7 +10,7 @@ class DepartmentAdmin(admin.ModelAdmin):
 class EmployeeAdmin(admin.ModelAdmin):
     list_filter = ("department", "role",)
     list_display = ("__str__", "username", "department",
-                    "role", "mobile", "email")
+                    "role", "mobile", "email", "is_staff")
     fields = ["username", "password", "mobile", "first_name", "last_name", "email", "department",
               "role", "about", "is_superuser", "is_staff", "is_active", "date_joined", "last_login"]
     # , "group", "permision"
@@ -37,10 +37,25 @@ class ServiceAdmin(admin.ModelAdmin):
     #           "notes", "state", "state_changed", "pending_at", "rejected_at", "approved_at", "started_at", "ended_at", "closed_at", "archived_at", "estimated_time"]
 
 
+# Django 4.2
+@admin.display(description="Employee")
+def emp(obj):
+    return f"{obj.service.employee}"
+
+
+@admin.display(description="Worker")
+def workr(obj):
+    return f"{obj.service.worker}"
+
+
 class FeedbackAdmin(admin.ModelAdmin):
     list_filter = ("rate", "service__employee", "service__worker")
-    list_display = ("name", "service", "service__employee",
-                    "rate", "service__worker")
+    # Django 5.1 With __ operator
+    # list_display = ("name", "service", "service__employee",
+    #                 "rate", "service__worker")
+    # Django 4.2
+    list_display = ("name", "service", emp, workr,
+                    "rate",)
 
 
 admin.site.register(Department, DepartmentAdmin)

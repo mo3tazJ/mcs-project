@@ -9,6 +9,9 @@ from rest_framework.authentication import SessionAuthentication, TokenAuthentica
 from django.contrib.auth.models import User
 from .models import *
 from .serializers import *
+from .reports import *
+from .stats import *
+from django.db.models import Sum, Count, Avg
 
 
 def index(request):
@@ -131,6 +134,3 @@ def get_service_by_id(request, id):
     service = get_object_or_404(Service, pk=id)
     serialized = ServiceSerializer(service)
     return Response({"service": serialized.data})
-
-
-# Feedback:

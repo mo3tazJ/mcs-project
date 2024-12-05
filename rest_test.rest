@@ -3,6 +3,11 @@ Content-Type: application/json
 
 {"username": "maan", "password": "maan@admin" }
 ###
+POST http://127.0.0.1:8000/login
+Content-Type: application/json
+
+{"username": "moutaz", "password": "moutaz@admin" }
+###
 GET http://127.0.0.1:8000/test_token
 Content-Type: application/json
 Authorization: token c21e535cd341746ce33e4ca2343542d4a5e39621
@@ -30,20 +35,37 @@ Authorization: token c21e535cd341746ce33e4ca2343542d4a5e39621
 ###
 GET http://127.0.0.1:8000/employee/5
 Content-Type: application/json
-Authorization: token c21e535cd341746ce33e4ca2343542d4a5e39621
+Authorization: token 66b4f94c3984997adfb0040f52ec6fe1ae83ca1a
 
 {}
 
 ###
 GET http://127.0.0.1:8000/service
 Content-Type: application/json
-Authorization: token c21e535cd341746ce33e4ca2343542d4a5e39621
+Authorization: token 66b4f94c3984997adfb0040f52ec6fe1ae83ca1a
 
 {"id": 1 ,"message": "Echo Back", "hint": "Get me back"}
 
 ###
 GET http://127.0.0.1:8000/service/1
 Content-Type: application/json
-Authorization: token c21e535cd341746ce33e4ca2343542d4a5e39621
+Authorization: token 66b4f94c3984997adfb0040f52ec6fe1ae83ca1a
 
 {"message": "Echo Back", "hint": "Get me back"}
+
+
+###
+GET http://127.0.0.1:8000/stats
+Content-Type: application/json
+Authorization: token 34378364ae39b0923229d6d64a8debc60e1810a0
+
+{}
+
+###
+GET http://127.0.0.1:8000/reports/device?
+Content-Type: application/json
+# Authorization: token 66b4f94c3984997adfb0040f52ec6fe1ae83ca1a
+
+{}
+
+###

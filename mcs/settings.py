@@ -30,6 +30,8 @@ ALLOWED_HOSTS = [
 
 # Application definition
 
+CRISPY_TEMPLATE_PACK = "bootstrap4"  # Slick Reporting Apps
+
 INSTALLED_APPS = [
     'backend',
     'django.contrib.admin',
@@ -41,6 +43,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',  # For allowing Cross-Origin Requests
+    "slick_reporting",  # Slick Reporting Apps
+    "crispy_forms",  # Slick Reporting Apps
+    "crispy_bootstrap4",  # Slick Reporting Apps
 ]
 
 MIDDLEWARE = [

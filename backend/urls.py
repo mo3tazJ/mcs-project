@@ -1,5 +1,5 @@
 from django.urls import path, re_path
-from . import views
+from . import views, reports, stats
 
 urlpatterns = [
     # path("welcome", views.welcome),
@@ -16,5 +16,9 @@ urlpatterns = [
     path("employee/<int:id>", views.get_employee_by_id),
     path("service", views.get_services),
     path("service/<int:id>", views.get_service_by_id),
+    path("stats", stats.get_stats),
+    path("reports/service", reports.ServiceReport.as_view()),
+    path("reports/feedback", reports.FeedbackReport.as_view()),
+    path("reports/device", reports.DeviceReport.as_view()),
 
 ]
