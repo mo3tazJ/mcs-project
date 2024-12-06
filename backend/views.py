@@ -15,7 +15,11 @@ from django.db.models import Sum, Count, Avg
 
 
 def index(request):
-    return render(request, "backend/index.html")
+    return render(request, "backend/home.html")
+
+
+def about(request):
+    return render(request, "backend/about.html")
 
 
 ##########################

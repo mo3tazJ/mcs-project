@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - ITMS</title>
+    <link rel="stylesheet" href="{% static 'backend/styles/styles.css' %}">
+</head>
+
+<body>
+    <header>
+        <h1>Welcome to ITMS</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+                <li><a href="{% url 'index' %}">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Welcome to ITMS Software!</h2>
+            <p>Your ultimate solution for IT management.</p>
+            <p>This System was built by <strong>ENG. Moutaz Jnoub</strong> For <strong>MCS</strong> Graduate Project at <strong>SVU</strong></p>
+            <p>ITMS Software is designed to streamline your IT operations, enhance productivity, and provide comprehensive solutions for managing IT resources.</p>
+        </section>
+        <section>
+            <h2>Features</h2>
+            <ul>
+                <li>Service Management</li>
+                <li>Incident Tracking</li>
+                <li>Reporting and Analytics</li>
+                <li>User Management</li>
+            </ul>
+        </section>
+        <nav class="bottom-nav">
+            <ul>
+                <li><a href="download.html">Download Product</a></li>
+                <li><a href="admin/">Admin Dashboard</a></li>
+            </ul>
+        </nav>
+    </main>
+    <footer>
+        <p>&copy; 2024 ITMS Software By <b>SVU\MCS</b>. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

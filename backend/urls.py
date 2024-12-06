@@ -2,9 +2,8 @@ from django.urls import path, re_path
 from . import views, reports, stats
 
 urlpatterns = [
-    # path("welcome", views.welcome),
-    # path("about", views.about),
     path("", views.index, name="index"),
+    path("about", views.about, name="about"),
     path("login", views.log_in, name="login"),
     re_path("logout", views.log_out),
     path("test_token", views.test_token),

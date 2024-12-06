@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - ITMS</title>
+    <link rel="stylesheet" href="{% static 'backend/styles/styles.css' %}">
+</head>
+
+<body>
+    <header>
+        <h1>About ITMS</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+                <li><a href="{% url 'index' %}">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>System Information</h2>
+            <p><strong>System Name:</strong> ITMS</p>
+            <p><strong>System Usage:</strong> Managing IT department and services</p>
+            <p><strong>Developer:</strong> ENG. Moutaz M. Jnoub</p>
+            <p><strong>Company:</strong> SVU</p>
+        </section>
+        <section>
+            <h2>Mission</h2>
+            <p>Our mission is to provide innovative solutions that enhance the efficiency and effectiveness of IT
+                management processes.</p>
+        </section>
+        
+    </main>
+    <footer>
+        <p>&copy; 2024 ITMS Software By <b>SVU\MCS</b>. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

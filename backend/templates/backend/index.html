@@ -12,6 +12,7 @@
         <h1>Welcome to ITMS Software!</h1>
         <p>Your ultimate solution for IT management.</p>
         <p>This System was built by ENG. Moutaz Jnoub For MCS Graduate Project at SVU</p>
+        
     </header>
     <main>
         <section class="info">
@@ -27,9 +28,10 @@
         </section>
         <nav>
             <ul>
-                <li><a href="about.html">About Us</a></li>
+                <li><a href="{% url 'about' %}">About Us</a></li>
                 <li><a href="download.html">Download Product</a></li>
                 <li><a href="contact.html">Contact Us</a></li>
+                <li><a href="{% url 'index' %}">Contact Us</a></li>
             </ul>
         </nav>
     </main>
