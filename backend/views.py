@@ -21,6 +21,10 @@ def about(request):
     return render(request, "backend/about.html")
 
 
+def adminPage(request):
+    return render(request, "backend/admin-page.html")
+
+
 ##########################
 # Login And Authintication
 ##########################

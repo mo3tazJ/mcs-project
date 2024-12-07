@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - ITMS</title>
+    <link rel="stylesheet" href="{% static 'backend/styles/styles.css' %}">
+</head>
+
+<body>
+    <header>
+        <h1>Welcome Admin</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+                <li><a href="{% url 'index' %}">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="admin-sect">
+            <h2>Admin Page</h2>
+            <p>Here You can view Reports or Go to the Admin Dashboard.</p>
+            <p><strong>Note:</strong> You Must Be An <strong>Admin</strong> to view below links</p>
+        </section>
+        <nav class="bottom-nav">
+            <ul>
+                <li><a href="admin/">Admin Dashboard</a></li>
+                <li><a href="reports/service">Services Report</a></li>
+                <li><a href="reports/service-tech">Services By Tech Report</a></li>
+                <li><a href="reports/feedback">Feedbacks Report</a></li>
+                <li><a href="reports/device">Devices Report</a></li>
+            </ul>
+        </nav>
+    </main>
+    <footer>
+        <p>&copy; 2024 ITMS Software By <b>SVU\MCS</b>. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>
