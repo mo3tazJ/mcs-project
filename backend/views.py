@@ -6,6 +6,7 @@ from rest_framework import status, viewsets
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from django.contrib.auth.models import User
+from django.contrib.sessions.models import Session
 from .models import *
 from .serializers import *
 from .reports import *
@@ -37,7 +38,8 @@ def log_in(request):
     session_hash = employee.get_session_auth_hash()
 
     emp_serializer = EmployeeSerializer(instance=employee)
-    return Response({"token": token.key, "user": emp_serializer.data, "sess": session_hash})
+    # , "session_hash2": session_hash2
+    return Response({"token": token.key, "session_hash": session_hash, "user": emp_serializer.data})
 
 
 @api_view(['POST'])
@@ -47,7 +49,10 @@ def log_out(request):
     # employee = get_object_or_404(Employee, username=request.data['username'])
     # token = Token.objects.get(user=employee)
     # token.delete()
+    # session_hash = employee.get_session_auth_hash()
+
     request.user.auth_token.delete()
+
     return Response({"Details": "Logged Out!"}, status=status.HTTP_200_OK)
 
 
@@ -148,9 +153,12 @@ def get_service_by_id(request, id):
 class DepartmentViewSet(viewsets.ModelViewSet):
     queryset = Department.objects.all()
     serializer_class = DepartmentSerializer
-
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
 
 # Role Viewset
+
+
 class RoleViewSet(viewsets.ModelViewSet):
     queryset = Role.objects.all()
     serializer_class = RoleSerializer
@@ -220,3 +228,5 @@ class ServiceViewSet(viewsets.ModelViewSet):
 class FeedbackViewSet(viewsets.ModelViewSet):
     queryset = Feedback.objects.all()
     serializer_class = FeedbackSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [SessionAuthentication, TokenAuthentication]

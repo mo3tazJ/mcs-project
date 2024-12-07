@@ -59,7 +59,7 @@ class Employee(User):
     updatet_at = models.DateTimeField("Updated", auto_now=True)
 
     def fullname(self):
-        return (self.first_name + self.last_name)
+        return f"{self.first_name} {self.last_name}"
 
     class Meta:
         verbose_name = ("Employee")

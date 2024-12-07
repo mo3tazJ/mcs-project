@@ -16,10 +16,11 @@ Authorization: token c21e535cd341746ce33e4ca2343542d4a5e39621
 ###
 POST http://127.0.0.1:8000/logout
 Content-Type: application/json
-Authorization: token c21e535cd341746ce33e4ca2343542d4a5e39621
+Authorization: token 9a9e045415716bc4b59cf6467e5798eb474e75c5
 
-{}
+{"username": "moutaz"}
 ###
+
 GET http://127.0.0.1:8000/department/2
 Content-Type: application/json
 Authorization: token c21e535cd341746ce33e4ca2343542d4a5e39621
@@ -42,14 +43,14 @@ Authorization: token 66b4f94c3984997adfb0040f52ec6fe1ae83ca1a
 ###
 GET http://127.0.0.1:8000/service
 Content-Type: application/json
-Authorization: token 66b4f94c3984997adfb0040f52ec6fe1ae83ca1a
+Authorization: token 34378364ae39b0923229d6d64a8debc60e1810a0
 
 {"id": 1 ,"message": "Echo Back", "hint": "Get me back"}
 
 ###
 GET http://127.0.0.1:8000/service/1
 Content-Type: application/json
-Authorization: token 66b4f94c3984997adfb0040f52ec6fe1ae83ca1a
+Authorization: token f72f4f9c55b84537c753239753679d7e77e7cf61
 
 {"message": "Echo Back", "hint": "Get me back"}
 
@@ -57,14 +58,14 @@ Authorization: token 66b4f94c3984997adfb0040f52ec6fe1ae83ca1a
 ###
 GET http://127.0.0.1:8000/stats
 Content-Type: application/json
-Authorization: token 34378364ae39b0923229d6d64a8debc60e1810a0
+Authorization: token f72f4f9c55b84537c753239753679d7e77e7cf61
 
 {}
 
 ###
 GET http://127.0.0.1:8000/reports/device?
 Content-Type: application/json
-# Authorization: token 66b4f94c3984997adfb0040f52ec6fe1ae83ca1a
+Authorization: token f72f4f9c55b84537c753239753679d7e77e7cf61
 
 {}
 
@@ -72,6 +73,30 @@ Content-Type: application/json
 GET http://127.0.0.1:8000/api/employee/2
 Content-Type: application/json
 # Authorization: token 66b4f94c3984997adfb0040f52ec6fe1ae83ca1a
+
+{}
+
+###
+
+GET http://127.0.0.1:8000/api/service
+Content-Type: application/json
+# Authorization: token 66b4f94c3984997adfb0040f52ec6fe1ae83ca1a
+
+{}
+
+###
+
+GET http://127.0.0.1:8000/api/feedback
+Content-Type: application/json
+Authorization: token 8901f2b85c2c86a58b2a02eb3d802edae4ac95ed
+
+{}
+
+###
+
+GET http://127.0.0.1:8000/api/department/1
+Content-Type: application/json
+Authorization: token f72f4f9c55b84537c753239753679d7e77e7cf61
 
 {}
 
