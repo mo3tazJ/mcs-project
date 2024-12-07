@@ -42,6 +42,7 @@ main {
     padding: 20px;
 }
 
+
 section {
     margin-bottom: 20px;
     padding: 15px;
@@ -49,6 +50,10 @@ section {
     /* White background for sections */
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.admin-sect {
+    text-align: center;
 }
 
 footer {
