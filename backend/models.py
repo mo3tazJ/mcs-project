@@ -185,23 +185,6 @@ class ServiceType(models.Model):
         return reverse("ServiceType_detail", kwargs={"pk": self.pk})
 
 
-class ServiceLocation(models.Model):
-
-    name = models.CharField("Service Location", max_length=100, unique=True)
-    created_at = models.DateTimeField("Created", auto_now_add=True)
-    updatet_at = models.DateTimeField("Updated", auto_now=True)
-
-    class Meta:
-        verbose_name = ("Service Location")
-        verbose_name_plural = ("Service Locations")
-
-    def __str__(self):
-        return self.name
-
-    def get_absolute_url(self):
-        return reverse("ServiceLocation_detail", kwargs={"pk": self.pk})
-
-
 class Subtype(models.Model):  # Rename it to Subtype
 
     name = models.CharField("Subtype", max_length=100, unique=True)
@@ -217,6 +200,23 @@ class Subtype(models.Model):  # Rename it to Subtype
 
     def get_absolute_url(self):
         return reverse("Subtype_detail", kwargs={"pk": self.pk})
+
+
+class ServiceLocation(models.Model):
+
+    name = models.CharField("Service Location", max_length=100, unique=True)
+    created_at = models.DateTimeField("Created", auto_now_add=True)
+    updatet_at = models.DateTimeField("Updated", auto_now=True)
+
+    class Meta:
+        verbose_name = ("Service Location")
+        verbose_name_plural = ("Service Locations")
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        return reverse("ServiceLocation_detail", kwargs={"pk": self.pk})
 
 
 class PriorityLevel(models.Model):

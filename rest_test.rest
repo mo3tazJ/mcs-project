@@ -69,3 +69,10 @@ Content-Type: application/json
 {}
 
 ###
+GET http://127.0.0.1:8000/api/employee/2
+Content-Type: application/json
+# Authorization: token 66b4f94c3984997adfb0040f52ec6fe1ae83ca1a
+
+{}
+
+###

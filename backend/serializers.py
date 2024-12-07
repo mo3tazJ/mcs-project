@@ -25,8 +25,8 @@ class RoleSerializer(serializers.ModelSerializer):
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
-    department = DepartmentSerializer()
-    role = RoleSerializer()
+    # department = DepartmentSerializer()
+    # role = RoleSerializer()
 
     class Meta(object):
         model = Employee
@@ -51,8 +51,8 @@ class AccessoryTypeSerializer(serializers.ModelSerializer):
 
 
 class DeviceSerializer(serializers.ModelSerializer):
-    device_type = DeviceTypeSerializer()
-    employee = EmployeeSerializer()
+    # device_type = DeviceTypeSerializer()
+    # employee = EmployeeSerializer()
 
     class Meta(object):
         model = Device
@@ -61,8 +61,8 @@ class DeviceSerializer(serializers.ModelSerializer):
 
 
 class AccessorySerializer(serializers.ModelSerializer):
-    accessory_type = AccessoryTypeSerializer()
-    device = DeviceSerializer()
+    # accessory_type = AccessoryTypeSerializer()
+    # device = DeviceSerializer()
 
     class Meta(object):
         model = Accessory
@@ -100,13 +100,13 @@ class PriorityLevelSerializer(serializers.ModelSerializer):
 
 class ServiceSerializer(serializers.ModelSerializer):
 
-    employee = EmployeeSerializer()
-    worker = EmployeeSerializer()
-    device = DeviceSerializer()
-    servie_type = ServiceTypeSerializer()
-    servie_location = ServiceLocationSerializer()
-    priority_level = PriorityLevelSerializer()
-    subtype = SubtypeSerializer()
+    # employee = EmployeeSerializer()
+    # worker = EmployeeSerializer()
+    # device = DeviceSerializer()
+    # servie_type = ServiceTypeSerializer()
+    # servie_location = ServiceLocationSerializer()
+    # priority_level = PriorityLevelSerializer()
+    # subtype = SubtypeSerializer()
 
     class Meta(object):
         model = Service
@@ -116,9 +116,9 @@ class ServiceSerializer(serializers.ModelSerializer):
 
 class FeedbackSerializer(serializers.ModelSerializer):
 
-    service = ServiceSerializer()
+    # service = ServiceSerializer()
 
     class Meta(object):
         model = Feedback
-        # fields = "__all__"
-        exclude = ['created_at', 'updatet_at']
+        fields = "__all__"
+        # exclude = ['created_at', 'updatet_at']

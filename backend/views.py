@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, viewsets
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from django.contrib.auth.models import User
@@ -141,3 +141,82 @@ def get_service_by_id(request, id):
     service = get_object_or_404(Service, pk=id)
     serialized = ServiceSerializer(service)
     return Response({"service": serialized.data})
+
+
+# ViewSets
+# Department Viewset
+class DepartmentViewSet(viewsets.ModelViewSet):
+    queryset = Department.objects.all()
+    serializer_class = DepartmentSerializer
+
+
+# Role Viewset
+class RoleViewSet(viewsets.ModelViewSet):
+    queryset = Role.objects.all()
+    serializer_class = RoleSerializer
+
+
+# Employee Viewset
+class EmployeeViewSet(viewsets.ModelViewSet):
+    queryset = Employee.objects.all()
+    serializer_class = EmployeeSerializer
+
+
+# Device Type Viewset
+class DeviceTypeViewSet(viewsets.ModelViewSet):
+    queryset = DeviceType.objects.all()
+    serializer_class = DeviceTypeSerializer
+
+
+# Accessory Type Viewset
+class AccessoryTypeViewSet(viewsets.ModelViewSet):
+    queryset = AccessoryType.objects.all()
+    serializer_class = AccessoryTypeSerializer
+
+
+# Device Viewset
+class DeviceViewSet(viewsets.ModelViewSet):
+    queryset = Device.objects.all()
+    serializer_class = DeviceSerializer
+
+
+# Accessory Viewset
+class AccessoryViewSet(viewsets.ModelViewSet):
+    queryset = Accessory.objects.all()
+    serializer_class = AccessorySerializer
+
+
+# Service Type Viewset
+class ServiceTypeViewSet(viewsets.ModelViewSet):
+    queryset = ServiceType.objects.all()
+    serializer_class = ServiceTypeSerializer
+
+
+# Subtype Viewset
+class SubtypeViewSet(viewsets.ModelViewSet):
+    queryset = Subtype.objects.all()
+    serializer_class = SubtypeSerializer
+
+
+# ServiceLocation Viewset
+class ServiceLocationViewSet(viewsets.ModelViewSet):
+    queryset = ServiceLocation.objects.all()
+    serializer_class = ServiceLocationSerializer
+
+
+# PriorityLevel Viewset
+class PriorityLevelViewSet(viewsets.ModelViewSet):
+    queryset = PriorityLevel.objects.all()
+    serializer_class = PriorityLevelSerializer
+
+
+# Service Viewset
+class ServiceViewSet(viewsets.ModelViewSet):
+    queryset = Service.objects.all()
+    serializer_class = ServiceSerializer
+
+
+# Feedback Viewset
+class FeedbackViewSet(viewsets.ModelViewSet):
+    queryset = Feedback.objects.all()
+    serializer_class = FeedbackSerializer
