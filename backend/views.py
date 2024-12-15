@@ -32,6 +32,12 @@ def adminPage(request):
 @api_view(['POST'])
 def log_in(request):
     employee = get_object_or_404(Employee, username=request.data['username'])
+    print(request.data['password'])
+    print(employee.password)
+    print(employee.is_active)
+    print(employee.is_authenticated)
+    print(employee.is_staff)
+    print(employee.is_superuser)
     if not employee.check_password(request.data['password']):
         return Response({"detail": "Not Found"}, status=status.HTTP_400_BAD_REQUEST)
     token, created = Token.objects.get_or_create(user=employee)
@@ -51,9 +57,11 @@ def log_out(request):
     # token.delete()
     # session_hash = employee.get_session_auth_hash()
 
-    request.user.auth_token.delete()
-
-    return Response({"Details": "Logged Out!"}, status=status.HTTP_200_OK)
+    if request.user.auth_token:
+        request.user.auth_token.delete()
+        return Response({"Details": "Logged Out!"}, status=status.HTTP_200_OK)
+    else:
+        return Response({"Details": "Not Logged In!"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET'])

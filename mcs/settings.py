@@ -82,24 +82,25 @@ WSGI_APPLICATION = 'mcs.wsgi.application'
 # Database
 
 # External Host
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'mcsdb',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': 'localhost',
+        'PORT': '3306'
+    }
+}
+
+# Default Settings
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'mcstest0',
-#         'USER': 'root',
-#         'PASSWORD': 'root',
-#         'HOST': 'localhost',
-#         'PORT': '3306'
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
 
-# Default Settings
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
 
 # Python Decouple Settings
 # DATABASES = {
@@ -127,6 +128,10 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+# To change default user model
+# AUTH_USER_MODEL = 'your_app_name.CustomUser'
+AUTH_USER_MODEL = 'backend.Employee'
 
 
 # Internationalization

@@ -3,7 +3,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils import timezone
 from model_utils import Choices
 from model_utils.fields import MonitorField, StatusField
-from django.contrib.auth.models import User  # AbstractUser, Group, Permission
+from django.contrib.auth.models import User, AbstractUser, Group, Permission
 from django.urls import reverse
 
 
@@ -43,7 +43,7 @@ class Role(models.Model):
         return reverse("Role_detail", kwargs={"pk": self.pk})
 
 
-class Employee(User):
+class Employee(AbstractUser):
 
     # Employee Fields
     mobile = models.CharField("Mobile No.", max_length=25, unique=True, help_text=(
@@ -58,6 +58,30 @@ class Employee(User):
     created_at = models.DateTimeField("Created", auto_now_add=True)
     updatet_at = models.DateTimeField("Updated", auto_now=True)
 
+    groups = models.ManyToManyField(
+        Group,
+        verbose_name=("Groups"),
+        blank=True,
+        help_text=(
+            "The groups this user belongs to. A user will get all permissions "
+            "granted to each of their groups."
+        ),
+        # related_name='emp_groups',
+        related_name="employee_set",
+        related_query_name="employee",
+    )
+
+    user_permissions = models.ManyToManyField(
+        Permission,
+        # to='auth.Permission',
+        verbose_name=("Permissions"),
+        blank=True,
+        help_text=("Specific permissions for this user."),
+        # related_name='emp_permissons',
+        related_name="employee_set",
+        related_query_name="employee",
+    )
+
     def fullname(self):
         return f"{self.first_name} {self.last_name}"
 
@@ -65,10 +89,15 @@ class Employee(User):
         verbose_name = ("Employee")
         verbose_name_plural = ("Employees")
 
+    # def save(self, *args, **kwargs):
+    #     if len(self.password) < 50:
+    #         self.set_password(raw_password=self.password)
+    #     return super(User, self).save(*args, **kwargs)
+
     def save(self, *args, **kwargs):
         if len(self.password) < 50:
-            self.set_password(raw_password=self.password)
-        return super(User, self).save(*args, **kwargs)
+            self.set_password(self.password)
+        super(Employee, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.get_full_name()
