@@ -67,7 +67,7 @@ db.sqlite3
 db.sqlite3-journal
 backend/migrations
 backend/migrations/
-
+mcs/settings.py
 
 # Flask stuff:
 instance/

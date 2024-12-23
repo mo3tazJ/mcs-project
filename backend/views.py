@@ -32,31 +32,30 @@ def adminPage(request):
 @api_view(['POST'])
 def log_in(request):
     employee = get_object_or_404(Employee, username=request.data['username'])
-    print(request.data['password'])
-    print(employee.password)
-    print(employee.is_active)
-    print(employee.is_authenticated)
-    print(employee.is_staff)
-    print(employee.is_superuser)
+
     if not employee.check_password(request.data['password']):
         return Response({"detail": "Not Found"}, status=status.HTTP_400_BAD_REQUEST)
     token, created = Token.objects.get_or_create(user=employee)
     session_hash = employee.get_session_auth_hash()
 
     emp_serializer = EmployeeSerializer(instance=employee)
-    # , "session_hash2": session_hash2
-    return Response({"token": token.key, "session_hash": session_hash, "user": emp_serializer.data})
+    employee.fcm_token = request.data['fcm_token']
+    employee.save()
+    return Response({"token": token.key, "user": emp_serializer.data})
 
 
 @api_view(['POST'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def log_out(request):
-    # employee = get_object_or_404(Employee, username=request.data['username'])
+    employee = get_object_or_404(Employee, username=request.data['username'])
     # token = Token.objects.get(user=employee)
     # token.delete()
     # session_hash = employee.get_session_auth_hash()
 
+    if employee.fcm_token:
+        employee.fcm_token = ""
+        employee.save()
     if request.user.auth_token:
         request.user.auth_token.delete()
         return Response({"Details": "Logged Out!"}, status=status.HTTP_200_OK)
@@ -67,10 +66,23 @@ def log_out(request):
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def test_token(request):
-    employee = get_object_or_404(Employee, username=request.data['username'])
-    deptserializer = DepartmentSerializer(employee.department)
-    return Response({"department": deptserializer.data['name']}, status=status.HTTP_200_OK)
+def get_employee_devices(request):
+    # emp = get_object_or_404(Employee, username=request.data['username'])
+    emp = get_object_or_404(Employee, pk=request.data['id'])
+    deptserializer = DepartmentSerializer(emp.department)
+    empdevices = Device.objects.filter(employee=emp)
+    devserializer = DeviceSerializer(empdevices, many=True)
+    return Response({"devices": devserializer.data})
+
+
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def get_employee_services(request):
+    emp = get_object_or_404(Employee, pk=request.data['id'])
+    empservices = Service.objects.filter(employee=emp)
+    srvserializer = ServiceSerializer(empservices, many=True)
+    return Response({"services": srvserializer.data})
 
 
 ##############
@@ -164,72 +176,93 @@ class DepartmentViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     authentication_classes = [SessionAuthentication, TokenAuthentication]
 
+
 # Role Viewset
-
-
 class RoleViewSet(viewsets.ModelViewSet):
     queryset = Role.objects.all()
     serializer_class = RoleSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
 
 
 # Employee Viewset
 class EmployeeViewSet(viewsets.ModelViewSet):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
 
 
 # Device Type Viewset
 class DeviceTypeViewSet(viewsets.ModelViewSet):
     queryset = DeviceType.objects.all()
     serializer_class = DeviceTypeSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
 
 
 # Accessory Type Viewset
 class AccessoryTypeViewSet(viewsets.ModelViewSet):
     queryset = AccessoryType.objects.all()
     serializer_class = AccessoryTypeSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
 
 
 # Device Viewset
 class DeviceViewSet(viewsets.ModelViewSet):
     queryset = Device.objects.all()
     serializer_class = DeviceSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
 
 
 # Accessory Viewset
 class AccessoryViewSet(viewsets.ModelViewSet):
     queryset = Accessory.objects.all()
     serializer_class = AccessorySerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
 
 
 # Service Type Viewset
 class ServiceTypeViewSet(viewsets.ModelViewSet):
     queryset = ServiceType.objects.all()
     serializer_class = ServiceTypeSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
 
 
 # Subtype Viewset
 class SubtypeViewSet(viewsets.ModelViewSet):
     queryset = Subtype.objects.all()
     serializer_class = SubtypeSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
 
 
 # ServiceLocation Viewset
 class ServiceLocationViewSet(viewsets.ModelViewSet):
     queryset = ServiceLocation.objects.all()
     serializer_class = ServiceLocationSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
 
 
 # PriorityLevel Viewset
 class PriorityLevelViewSet(viewsets.ModelViewSet):
     queryset = PriorityLevel.objects.all()
     serializer_class = PriorityLevelSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
 
 
 # Service Viewset
 class ServiceViewSet(viewsets.ModelViewSet):
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
 
 
 # Feedback Viewset

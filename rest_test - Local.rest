@@ -6,17 +6,17 @@ Content-Type: application/json
 POST http://127.0.0.1:8000/login
 Content-Type: application/json
 
-{"username": "moutaz", "password": "moutaz@admin" }
+{"username": "alaa", "password": "alaa@admin", "fcm_token": "cocococo" }
 ###
-GET http://127.0.0.1:8000/test_token
+POST http://127.0.0.1:8000/login
 Content-Type: application/json
-Authorization: token fdc574f6b1672ce6217556c20712e52a1360d047
 
-{"username": "maan", "password": "maan@admin"}
+{"username": "moutaz", "password": "moutaz@admin", "fcm_token": "wakwak"  }
+
 ###
 POST http://127.0.0.1:8000/logout
 Content-Type: application/json
-Authorization: token 5246ad2ba61db1984a81b12c8f011d543dfca11d
+Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
 
 {"username": "moutaz"}
 ###
@@ -96,8 +96,22 @@ Authorization: token 8901f2b85c2c86a58b2a02eb3d802edae4ac95ed
 
 GET http://127.0.0.1:8000/api/department/1
 Content-Type: application/json
-Authorization: token f72f4f9c55b84537c753239753679d7e77e7cf61
+Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
 
 {}
 
+###
+
+GET http://127.0.0.1:8000/get-employee-devices
+Content-Type: application/json
+Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
+
+{"id":"5"}
+###
+
+GET http://127.0.0.1:8000/get-employee-services
+Content-Type: application/json
+Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
+
+{"id":"5"}
 ###

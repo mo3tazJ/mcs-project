@@ -1,0 +1,120 @@
+POST https://mcsproject.pythonanywhere.com/login
+Content-Type: application/json
+
+{"username": "alaa", "password": "alaa@admin", "fcm_token": "cocococo" }
+###
+POST https://mcsproject.pythonanywhere.com/login
+Content-Type: application/json
+
+{"username": "moutaz", "password": "moutaz@admin", "fcm_token": "wakwak"  }
+
+###
+POST https://mcsproject.pythonanywhere.com/logout
+Content-Type: application/json
+Authorization: token 5246ad2ba61db1984a81b12c8f011d543dfca11d
+
+{"username": "moutaz"}
+###
+
+GET https://mcsproject.pythonanywhere.com/department/2
+Content-Type: application/json
+Authorization: token 693279ec9baddf5aadb9de39bf6946adc10dfa89
+
+{}
+###
+GET https://mcsproject.pythonanywhere.com/department
+Content-Type: application/json
+Authorization: token 632e747d7a5a859f5b463578918e9c2eca569524
+
+{}
+
+###
+GET https://mcsproject.pythonanywhere.com/employee/5
+Content-Type: application/json
+Authorization: token 66b4f94c3984997adfb0040f52ec6fe1ae83ca1a
+
+{}
+
+###
+GET https://mcsproject.pythonanywhere.com/service
+Content-Type: application/json
+Authorization: token 632e747d7a5a859f5b463578918e9c2eca569524
+
+{"id": 1 ,"message": "Echo Back", "hint": "Get me back"}
+
+###
+GET https://mcsproject.pythonanywhere.com/service/1
+Content-Type: application/json
+Authorization: token f72f4f9c55b84537c753239753679d7e77e7cf61
+
+{"message": "Echo Back", "hint": "Get me back"}
+
+
+###
+GET https://mcsproject.pythonanywhere.com/stats
+Content-Type: application/json
+Authorization: token 632e747d7a5a859f5b463578918e9c2eca569524
+
+{}
+
+###
+GET https://mcsproject.pythonanywhere.com/reports/device?
+Content-Type: application/json
+Authorization: token f72f4f9c55b84537c753239753679d7e77e7cf61
+
+{}
+
+###
+GET https://mcsproject.pythonanywhere.com/api/employee/2
+Content-Type: application/json
+# Authorization: token 66b4f94c3984997adfb0040f52ec6fe1ae83ca1a
+
+{}
+
+###
+
+GET https://mcsproject.pythonanywhere.com/api/service
+Content-Type: application/json
+# Authorization: token 66b4f94c3984997adfb0040f52ec6fe1ae83ca1a
+
+{}
+
+###
+
+GET https://mcsproject.pythonanywhere.com/api/feedback
+Content-Type: application/json
+Authorization: token 8901f2b85c2c86a58b2a02eb3d802edae4ac95ed
+
+{}
+
+###
+
+GET https://mcsproject.pythonanywhere.com/api/department/1
+Content-Type: application/json
+Authorization: token 693279ec9baddf5aadb9de39bf6946adc10dfa89
+
+{}
+
+###
+
+GET https://mcsproject.pythonanywhere.com/api/device/1
+Content-Type: application/json
+# Authorization: token 66b4f94c3984997adfb0040f52ec6fe1ae83ca1a
+
+{}
+
+###
+
+GET https://mcsproject.pythonanywhere.com/get-employee-devices
+Content-Type: application/json
+Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
+
+{"id":"5", "username": "ammar", "password": "ammar@admin"}
+###
+
+GET https://mcsproject.pythonanywhere.com/get-employee-services
+Content-Type: application/json
+Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
+
+{"id":"5", "username": "ammar"}
+###

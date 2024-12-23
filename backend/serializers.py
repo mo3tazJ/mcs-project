@@ -3,13 +3,6 @@ from django.contrib.auth.models import User
 from .models import *
 
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta(object):
-        model = User
-        fields = ['id', 'username', 'password', 'email',
-                  "first_name", "last_name", "is_superuser", "is_staff"]
-
-
 class DepartmentSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = Department
@@ -144,20 +137,12 @@ class SvcPriorityLevelSerializer(serializers.ModelSerializer):
 class ServiceSerializer(serializers.ModelSerializer):
 
     # employee = EmployeeSerializer()
-    # worker = SvcEmployeeSerializer()
-    # device = SvcDeviceSerializer()
-    # servie_type = SvcServiceTypeSerializer()
-    # servie_location = SvcServiceLocationSerializer()
-    # priority_level = SvcPriorityLevelSerializer()
-    # subtype = SvcSubtypeSerializer()
-
-    employee = EmployeeSerializer()
-    worker = EmployeeSerializer()
-    device = DeviceSerializer()
-    servie_type = ServiceTypeSerializer()
-    servie_location = ServiceLocationSerializer()
-    priority_level = PriorityLevelSerializer()
-    subtype = SubtypeSerializer()
+    # worker = EmployeeSerializer()
+    # device = DeviceSerializer()
+    # servie_type = ServiceTypeSerializer()
+    # servie_location = ServiceLocationSerializer()
+    # priority_level = PriorityLevelSerializer()
+    # subtype = SubtypeSerializer()
 
     class Meta(object):
         model = Service
