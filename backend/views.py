@@ -26,6 +26,13 @@ def adminPage(request):
     return render(request, "backend/admin-page.html")
 
 
+# notification test
+@api_view(['POST'])
+def send_notification(request):
+    sendFcm(fcm="cByANuUuSgSU71W6ptMWOD:APA91bHelhpay1mLD88266asNK44T3Hd4VAS3BBzDeH1aOqNyyNX0iSaKtjyHQOJc58nlT4TsDm5Sm4ZWVS3kEVfbYK0NOoYGXp4shv1LLwRbrin4qA4CGk", title="title", body="body")
+    return Response({"token": "token.key", "user": "emp_serializer.data"})
+
+
 ##########################
 # Login And Authintication
 ##########################
