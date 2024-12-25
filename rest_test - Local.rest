@@ -115,3 +115,10 @@ Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
 
 {"id":"5"}
 ###
+
+POST http://127.0.0.1:8000/send-notification 
+Content-Type: application/json 
+Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb 
+
+{"id":"5"} 
+###
