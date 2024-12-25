@@ -67,7 +67,7 @@ db.sqlite3
 db.sqlite3-journal
 backend/migrations
 backend/migrations/
-mcs/settings.py
+
 
 # Flask stuff:
 instance/
@@ -137,8 +137,8 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-mcsenv/
-mcsenv
+venv3.9/
+venv3.9
 
 # Spyder project settings
 .spyderproject
