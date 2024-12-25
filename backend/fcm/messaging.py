@@ -15,6 +15,7 @@ from google.oauth2 import service_account
 from google import *
 import google.auth.transport.requests
 
+# pip install google-auth google-auth-httplib2 google-api-python-client
 # from google.oauth2 import service_account
 
 PROJECT_ID = 'itms-77d5e'
