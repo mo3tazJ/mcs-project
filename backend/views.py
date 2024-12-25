@@ -12,6 +12,7 @@ from .serializers import *
 from .reports import *
 from .stats import *
 from django.db.models import Sum, Count, Avg
+from backend.fcm.messaging import sendFcm
 
 
 def index(request):
