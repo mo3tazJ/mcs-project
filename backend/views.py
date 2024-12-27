@@ -279,3 +279,23 @@ class FeedbackViewSet(viewsets.ModelViewSet):
     serializer_class = FeedbackSerializer
     permission_classes = [IsAuthenticated]
     authentication_classes = [SessionAuthentication, TokenAuthentication]
+
+
+# Add Service
+@api_view(['POST'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def add_service(request):
+    # employee_details = get_object_or_404(
+    #     Employee, pk=request.data['client_id'])
+    service = Service()
+    service.employee = request.data['client_id']
+    service.name = request.data['name']
+    service.description = request.data['description']
+    service.servie_type = request.data['service_type_id']
+    service.subtype = request.data['subtype_id']
+    service.servie_location = request.data['service_location_id']
+    service.device = request.data['device_id']
+    service.save()
+
+    return Response({"message": "Service Added"}, status=status.HTTP_200_OK)

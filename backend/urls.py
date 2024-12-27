@@ -35,6 +35,7 @@ urlpatterns = [
     path("employee/<int:id>", views.get_employee_by_id),
     path("service", views.get_services),
     path("service/<int:id>", views.get_service_by_id),
+    path("add-service", views.add_service),
     path("stats", stats.get_stats),
     path("reports/service", reports.ServiceReport.as_view()),
     path("reports/service-tech", reports.ServiceByTechReport.as_view()),
