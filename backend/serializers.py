@@ -18,8 +18,6 @@ class RoleSerializer(serializers.ModelSerializer):
 
 
 class EmployeeSerializer(serializers.ModelSerializer):
-    # department = DepartmentSerializer()
-    # role = RoleSerializer()
 
     class Meta(object):
         model = Employee
@@ -30,8 +28,6 @@ class EmployeeSerializer(serializers.ModelSerializer):
 
 
 class SvcEmployeeSerializer(serializers.ModelSerializer):
-    # department = DepartmentSerializer()
-    # role = RoleSerializer()
 
     class Meta(object):
         model = Employee
@@ -47,6 +43,7 @@ class DeviceTypeSerializer(serializers.ModelSerializer):
 
 
 class AccessoryTypeSerializer(serializers.ModelSerializer):
+
     class Meta(object):
         model = AccessoryType
         # fields = "__all__"
@@ -54,8 +51,6 @@ class AccessoryTypeSerializer(serializers.ModelSerializer):
 
 
 class DeviceSerializer(serializers.ModelSerializer):
-    # device_type = DeviceTypeSerializer()
-    # employee = EmployeeSerializer()
 
     class Meta(object):
         model = Device
@@ -64,8 +59,6 @@ class DeviceSerializer(serializers.ModelSerializer):
 
 
 class SvcDeviceSerializer(serializers.ModelSerializer):
-    # device_type = DeviceTypeSerializer()
-    # employee = EmployeeSerializer()
 
     class Meta(object):
         model = Device
@@ -73,8 +66,6 @@ class SvcDeviceSerializer(serializers.ModelSerializer):
 
 
 class AccessorySerializer(serializers.ModelSerializer):
-    # accessory_type = AccessoryTypeSerializer()
-    # device = DeviceSerializer()
 
     class Meta(object):
         model = Accessory
@@ -136,19 +127,22 @@ class SvcPriorityLevelSerializer(serializers.ModelSerializer):
 
 class ServiceSerializer(serializers.ModelSerializer):
 
-    # employee = EmployeeSerializer()
-    # worker = EmployeeSerializer()
-    # device = DeviceSerializer()
-    # servie_type = ServiceTypeSerializer()
-    # servie_location = ServiceLocationSerializer()
-    # priority_level = PriorityLevelSerializer()
-    # subtype = SubtypeSerializer()
-
     class Meta(object):
         model = Service
         # fields = "__all__"
-        # fields = ['name', 'employee']
         exclude = ['created_at', 'updatet_at']
+
+
+class SvcServiceSerializer(serializers.ModelSerializer):
+
+    # subtype = SubtypeSerializer()
+    class Meta(object):
+        model = Service
+        fields = "__all__"
+
+    # def create(self, validated_data):
+    #     validated_data['user'] = self.context["request"].user
+    #     return super(SvcServiceSerializer, self).create(validated_data)
 
 
 class FeedbackSerializer(serializers.ModelSerializer):

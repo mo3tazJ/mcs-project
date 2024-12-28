@@ -80,7 +80,7 @@ Content-Type: application/json
 
 GET http://127.0.0.1:8000/api/service
 Content-Type: application/json
-# Authorization: token 66b4f94c3984997adfb0040f52ec6fe1ae83ca1a
+Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
 
 {}
 
@@ -125,15 +125,15 @@ Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
 
 POST http://127.0.0.1:8000/add-service
 Content-Type: application/json 
-Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb0 
+Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb 
 
-{
-    "name": "test service",
-    "client_id": "6",
-    "description": "test service",
-    "service_type_id": "1",
-    "subtype_id": "10",
-    "service_location_id": "2",
-    "device_id": "3",
-    }
+{"name": "test service","client_id": "6","description": "test service","service_type_id": "1","subtype_id": "10","service_location_id": "2","priority_level_id": "2","device_id": 0}
+
+###
+POST http://127.0.0.1:8000/add-service
+Content-Type: application/json 
+Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb 
+
+{"name": "test service","employee": 6,"description": "test service18","servie_type": 2,"subtype": 8,"servie_location": 1,"priority_level": 4, "device": 1}
+
 ###

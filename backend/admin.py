@@ -32,9 +32,10 @@ class ServiceAdmin(admin.ModelAdmin):
     list_filter = ("servie_type", "servie_location", "priority_level", "state")
     list_display = ("name", "employee", "worker", "device", "state",
                     "servie_type", "servie_location", "priority_level")
-    # fields = ["name", "employee", "servie_type", "subtype", "device", "description",
+    # fields = ["name", "description", "employee", "servie_type", "subtype", "device",
     #           "servie_location", "priority_level", "worker", "diagnose", "solution",
-    #           "notes", "state", "state_changed", "pending_at", "rejected_at", "approved_at", "started_at", "ended_at", "closed_at", "archived_at", "estimated_time"]
+    #           "notes", "state", "state_changed", "pending_at", "rejected_at", "approved_at", "started_at", "ended_at", "closed_at", "archived_at", "estimated_time", "created_at", "updatet_at"]
+    readonly_fields = ["created_at", "updatet_at"]
 
 
 # Django 4.2
