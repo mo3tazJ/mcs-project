@@ -137,3 +137,24 @@ Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
 {"name": "test service","employee": 6,"description": "test service18","servie_type": 2,"subtype": 8,"servie_location": 1,"priority_level": 4, "device": 1}
 
 ###
+POST http://127.0.0.1:8000/process-service-mgr
+Content-Type: application/json 
+Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb 
+
+{"id": 2, "worker": 7, "state": "approved", "reason": ""}
+
+###
+POST http://127.0.0.1:8000/process-service-tech
+Content-Type: application/json 
+Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb 
+
+{"id": 2, "diagnose": "diag", "solution": "solution", "notes": "notes", "state": "started"}
+
+###
+POST http://127.0.0.1:8000/add-feedback
+Content-Type: application/json 
+Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb 
+
+{"name": "test feedback","service": 2,"rate": 5,"review": "Test Review for the test feedback"}
+
+###

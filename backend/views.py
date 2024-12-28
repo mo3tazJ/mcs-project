@@ -334,3 +334,64 @@ def add_service1(request):
     service.save()
 
     return Response({"message": "Service Added"}, status=status.HTTP_200_OK)
+
+
+# Manager Service Process
+@api_view(['POST'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def process_service_mgr(request):
+    service = get_object_or_404(Service, pk=request.data['id'])
+    worker = get_object_or_404(
+        Employee, pk=request.data['worker'])
+
+    print(request.data)
+
+    print(service)
+    print(service.state)
+
+    service.state = request.data['state']
+    if service.state == "approved":
+        service.worker = worker
+    if service.state == "rejected":
+        service.reason = request.data['reason']
+
+    service.save()
+    print(service.state)
+    serializer = ServiceSerializer(service)
+    return Response({"message": "Service Updated", "data": serializer.data}, status=status.HTTP_200_OK)
+
+
+# Tech Service Process
+@api_view(['POST'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def process_service_tech(request):
+    service = get_object_or_404(Service, pk=request.data['id'])
+
+    print(request.data)
+
+    print(service)
+    print(service.state)
+
+    service.state = request.data['state']
+    service.diagnose = request.data['diagnose']
+    service.notes = request.data['notes']
+    print(service)
+    # service.save()
+    print(service.state)
+    serializer = ServiceSerializer(service)
+    return Response({"message": "Service Updated", "data": serializer.data}, status=status.HTTP_200_OK)
+
+
+# Add Feedback
+@api_view(['POST'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def add_feedback(request, *args, **kwargs):
+    serializer = FeedbackSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        instance = serializer.save()
+        # print(serializer.data)
+        return Response({"message": "Feedback Added"})
+    return Response({"message": "Invalid"}, status=status.HTTP_400_BAD_REQUEST)

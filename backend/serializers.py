@@ -80,23 +80,11 @@ class ServiceTypeSerializer(serializers.ModelSerializer):
         exclude = ['created_at', 'updatet_at']
 
 
-class SvcServiceTypeSerializer(serializers.ModelSerializer):
-    class Meta(object):
-        model = ServiceType
-        fields = ("name",)
-
-
 class ServiceLocationSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = ServiceLocation
         # fields = "__all__"
         exclude = ['created_at', 'updatet_at']
-
-
-class SvcServiceLocationSerializer(serializers.ModelSerializer):
-    class Meta(object):
-        model = ServiceLocation
-        fields = ("name",)
 
 
 class SubtypeSerializer(serializers.ModelSerializer):
@@ -106,23 +94,11 @@ class SubtypeSerializer(serializers.ModelSerializer):
         exclude = ['created_at', 'updatet_at']
 
 
-class SvcSubtypeSerializer(serializers.ModelSerializer):
-    class Meta(object):
-        model = Subtype
-        fields = ("name",)
-
-
 class PriorityLevelSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = PriorityLevel
         # fields = "__all__"
         exclude = ['created_at', 'updatet_at']
-
-
-class SvcPriorityLevelSerializer(serializers.ModelSerializer):
-    class Meta(object):
-        model = PriorityLevel
-        fields = ("name",)
 
 
 class ServiceSerializer(serializers.ModelSerializer):
@@ -147,9 +123,6 @@ class SvcServiceSerializer(serializers.ModelSerializer):
 
 class FeedbackSerializer(serializers.ModelSerializer):
 
-    # service = ServiceSerializer()
-
     class Meta(object):
         model = Feedback
-        # fields = "__all__"
-        exclude = ['created_at', 'updatet_at']
+        fields = "__all__"
