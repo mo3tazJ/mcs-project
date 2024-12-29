@@ -39,6 +39,7 @@ urlpatterns = [
     path("add-service", views.add_service),
     path("process-service-mgr", views.process_service_mgr),
     path("process-service-tech", views.process_service_tech),
+    path("archive-service", views.ArchiveServiceAPIView.as_view()),
     path("add-service1", views.add_service1),
     path("add-feedback", views.add_feedback),
     path("reports/service", reports.ServiceReport.as_view()),

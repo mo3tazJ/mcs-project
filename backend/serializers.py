@@ -21,7 +21,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
 
     class Meta(object):
         model = Employee
-        exclude = ['created_at', 'updatet_at', 'password']
+        exclude = ['created_at', 'updatet_at', 'password', 'fcm_token']
         # fields = "__all__"
         # fields = ['id', 'username', 'password', 'email', 'first_name', 'last_name',
         #           'is_superuser', 'is_staff', 'department', 'role', 'mobile', 'about']
