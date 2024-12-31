@@ -105,8 +105,8 @@ class ServiceSerializer(serializers.ModelSerializer):
 
     class Meta(object):
         model = Service
-        # fields = "__all__"
-        exclude = ['created_at', 'updatet_at']
+        fields = "__all__"
+        # exclude = ['created_at', 'updatet_at']
 
 
 class SvcServiceSerializer(serializers.ModelSerializer):

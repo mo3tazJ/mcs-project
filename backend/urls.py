@@ -37,6 +37,7 @@ urlpatterns = [
     path("service/<int:id>", views.get_service_by_id),
     path("stats", stats.get_stats),
     path("add-service", views.add_service),
+    path("edit-service-client", views.edit_service_client),
     path("process-service-mgr", views.process_service_mgr),
     path("process-service-tech", views.process_service_tech),
     path("archive-service", views.ArchiveServiceAPIView.as_view()),

@@ -135,16 +135,23 @@ Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
 
 {"name": "test service","client_id": "6","description": "test service","service_type_id": "1","subtype_id": "10","service_location_id": "2","priority_level_id": "2","device_id": 0}
 
-###
+### Add Service
 POST http://127.0.0.1:8000/add-service
 Content-Type: application/json 
 Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb 
 
-{"name": "add service6","employee": 6,"description": "test service18","servie_type": 2,"subtype": 8,"servie_location": 1,"priority_level": 4, "device": 1}
+{"name": "New Test Service","employee": 6,"description": "New test service18","servie_type": 2,"subtype": 8,"servie_location": 1,"priority_level": 4, "device": 1}
+
+### Edit Pending Service By Client
+POST http://127.0.0.1:8000/edit-service-client
+Content-Type: application/json 
+Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb 
+
+{"id": 39, "name": "Updated New Test Service","employee": 6,"description": "New test service","servie_type": 2,"subtype": 8,"servie_location": 1,"priority_level": 4, "device": 1, "state": "pending"}
 
 
 ### GET service With ViewSet
-GET  http://127.0.0.1:8000/api/service/27/
+GET  http://127.0.0.1:8000/api/service/39/
 Content-Type: application/json 
 Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb 
 
@@ -162,28 +169,28 @@ PATCH  http://127.0.0.1:8000/api/service/26/
 Content-Type: application/json 
 Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb 
 
-{"name": "vs service EDited", "state": "started"}
+{"name": "Teest service EDited", "state": "pending"}
 
-###
+### Manager Service Process
 POST http://127.0.0.1:8000/process-service-mgr
 Content-Type: application/json 
 Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb 
 
-{"id": 2, "worker": 7, "state": "approved", "reason": ""}
+{"id": 39, "worker": 7, "state": "approved", "reason": "Some Damn Reason"}
 
 ###
 POST http://127.0.0.1:8000/process-service-tech
 Content-Type: application/json 
 Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb 
 
-{"id": 2, "diagnose": "diag", "solution": "solution", "notes": "notes", "state": "started"}
+{"id": 39, "diagnose": "diag", "solution": "solution", "notes": "notes", "state": "ended"}
 
 ###
 POST http://127.0.0.1:8000/add-feedback
 Content-Type: application/json 
 Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb 
 
-{"name": "test feedback","service": 2,"rate": 5,"review": "Test Review for the test feedback"}
+{"name": "test feedback 39","service": 39,"rate": 4,"review": "Test Review for the test feedback"}
 
 ###
 GET http://127.0.0.1:8000/archive-service
@@ -197,6 +204,6 @@ POST http://127.0.0.1:8000/archive-service
 Content-Type: application/json 
 Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb 
 
-{"id": 1, "state": "closed"}
+{"id": 39, "state": "closed"}
 
 ###

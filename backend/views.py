@@ -303,6 +303,22 @@ def add_service(request, *args, **kwargs):
     return Response({"message": "Invalid"}, status=status.HTTP_400_BAD_REQUEST)
 
 
+# Edit Pending Service By Client
+@api_view(['POST'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def edit_service_client(request, *args, **kwargs):
+    service = get_object_or_404(Service, pk=request.data.get('id'))
+    serializer = ServiceSerializer(data=request.data)
+    if request.data.get('state') == 'pending':
+        if serializer.is_valid(raise_exception=True):
+            vd = serializer.validated_data
+            serializer.update(instance=service, validated_data=vd)
+            serialized = ServiceSerializer(service)
+            return Response({"message": "Service Updated", "data": serialized.data})
+    return Response({"message": "Invalid"}, status=status.HTTP_400_BAD_REQUEST)
+
+
 # Add Service1
 @api_view(['POST'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
@@ -347,41 +363,50 @@ def add_service1(request):
 @permission_classes([IsAuthenticated])
 def process_service_mgr(request):
     service = get_object_or_404(Service, pk=request.data.get('id'))
-    worker = get_object_or_404(
-        Employee, pk=request.data.get('worker'))
-
-    print(request.data)
-
-    print(service)
-    print(service.state)
-
-    service.state = request.data.get('state')
-    if service.state == "approved":
+    client = get_object_or_404(
+        Employee, pk=service.employee.id)
+    new_state = request.data.get('state')
+    if new_state == "approved":
+        worker = get_object_or_404(
+            Employee, pk=request.data.get('worker'))
         service.worker = worker
+        service.state = new_state
         service.save()
-        # Notification
-        fcm = "fcm"
+        # Notification For Tech
+        fcm = worker.fcm_token
         title = "New Assignement"
         body = f"You Have A New Service Assignement"
         print(title)
         print(body)
+        print(fcm)
         # sendFcm(fcm="cByANuUuSgSU71W6ptMWOD:APA91bHelhpay1mLD88266asNK44T3Hd4VAS3BBzDeH1aOqNyyNX0iSaKtjyHQOJc58nlT4TsDm5Sm4ZWVS3kEVfbYK0NOoYGXp4shv1LLwRbrin4qA4CGk", title="New Service", body="body")
 
-    if service.state == "rejected":
-        service.reason = request.data.get('reason')
-        service.save()
-        # Notification
-        fcm = "fcm"
-        title = "Request Rejected"
-        body = f"Reason: {service.reason} "
+        # Notification For Client
+        fcm = client.fcm_token
+        title = "Request Approved"
+        body = f"Your Service Request is Approved"
         print(title)
         print(body)
+        print(fcm)
         # sendFcm(fcm="cByANuUuSgSU71W6ptMWOD:APA91bHelhpay1mLD88266asNK44T3Hd4VAS3BBzDeH1aOqNyyNX0iSaKtjyHQOJc58nlT4TsDm5Sm4ZWVS3kEVfbYK0NOoYGXp4shv1LLwRbrin4qA4CGk", title="New Service", body="body")
 
-    # service.save()
-    print(service.state)
-    serializer = ServiceSerializer(service)
-    return Response({"message": "Service Updated", "data": serializer.data}, status=status.HTTP_200_OK)
+        serializer = ServiceSerializer(service)
+        return Response({"message": "Service Approved", "data": serializer.data}, status=status.HTTP_200_OK)
+    elif new_state == "rejected":
+        service.reason = request.data.get('reason')
+        service.state = new_state
+        service.save()
+        # Notification
+        fcm = client.fcm_token
+        title = "Request Rejected"
+        body = f"Reason: {service.reason}"
+        print(title)
+        print(body)
+        print(fcm)
+        # sendFcm(fcm="cByANuUuSgSU71W6ptMWOD:APA91bHelhpay1mLD88266asNK44T3Hd4VAS3BBzDeH1aOqNyyNX0iSaKtjyHQOJc58nlT4TsDm5Sm4ZWVS3kEVfbYK0NOoYGXp4shv1LLwRbrin4qA4CGk", title="New Service", body="body")
+        serializer = ServiceSerializer(service)
+        return Response({"message": "Service Rejected", "data": serializer.data}, status=status.HTTP_200_OK)
+    return Response({"message": "Invalid State, Not In ['rejected','approved']"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 # Tech Service Process
