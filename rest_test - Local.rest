@@ -1,132 +1,102 @@
+### Login
 POST http://127.0.0.1:8000/login
 Content-Type: application/json
 
 {"username": "maan", "password": "maan@admin" }
-###
+
+### Login
 POST http://127.0.0.1:8000/login
 Content-Type: application/json
 
 {"username": "alaa", "password": "alaa@admin", "fcm_token": "cocococo" }
-###
+
+### Login
 POST http://127.0.0.1:8000/login
 Content-Type: application/json
 
 {"username": "moutaz", "password": "moutaz@admin", "fcm_token": "wakwak"  }
 
-###
+
+### Logout
 POST http://127.0.0.1:8000/logout
 Content-Type: application/json
 Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
 
 {"username": "moutaz"}
-###
 
-GET http://127.0.0.1:8000/department/2
-Content-Type: application/json
-Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
 
-{}
-###
+### Get All Departments:
 GET http://127.0.0.1:8000/department
 Content-Type: application/json
 Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
 
 {}
 
-###
+
+### Get Department By ID:
+GET http://127.0.0.1:8000/department/2
+Content-Type: application/json
+Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
+
+{}
+
+
+### Get All Employees:
 GET http://127.0.0.1:8000/employee
 Content-Type: application/json
 Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
 
 {}
 
-###
+
+### Get Employee By ID:
 GET http://127.0.0.1:8000/employee/8
 Content-Type: application/json
 Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
 
 {}
 
-###
+
+### Get All Services:
 GET http://127.0.0.1:8000/service
 Content-Type: application/json
 Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
 
 {}
 
-###
+
+### Get Service By ID:
 GET http://127.0.0.1:8000/service/2
 Content-Type: application/json
 Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
 
 {}
 
-###
-GET http://127.0.0.1:8000/stats
-Content-Type: application/json
-Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
 
-{}
 
-###
-GET http://127.0.0.1:8000/reports/device?
-Content-Type: application/json
-Authorization: token f72f4f9c55b84537c753239753679d7e77e7cf61
-
-{}
-
-###
-GET http://127.0.0.1:8000/api/employee/8
-Content-Type: application/json
-Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
-
-{}
-
-###
-
-GET http://127.0.0.1:8000/api/service/1
-Content-Type: application/json
-Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
-
-{}
-
-###
-
-GET http://127.0.0.1:8000/api/feedback
-Content-Type: application/json
-Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
-
-{}
-
-###
-
-GET http://127.0.0.1:8000/api/department/1
-Content-Type: application/json
-Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
-
-{}
-
-###
-
+### Get Employee Devices:
 GET http://127.0.0.1:8000/get-employee-devices
 Content-Type: application/json
 Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
 
 {"id":"5"}
-###
 
+
+### Get Employee Services:
 GET http://127.0.0.1:8000/get-employee-services
 Content-Type: application/json
 Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
 
 {"id":"5"}
-###
 
+
+### Test Notification:
 POST http://127.0.0.1:8000/send-notification 
 Content-Type: application/json 
 Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb 
 
 {"id":"5"} 
+
 
 ### Add Service
 POST http://127.0.0.1:8000/add-service
@@ -134,6 +104,7 @@ Content-Type: application/json
 Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb 
 
 {"name": "New Test Service","employee": 6,"description": "New test service18","servie_type": 2,"subtype": 8,"servie_location": 1,"priority_level": 4, "device": 1}
+
 
 ### Edit Pending Service By Client
 POST http://127.0.0.1:8000/edit-service-client
@@ -143,60 +114,151 @@ Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
 {"id": 39, "name": "Updated New Test Service","employee": 6,"description": "New test service","servie_type": 2,"subtype": 8,"servie_location": 1,"priority_level": 4, "device": 1, "state": "pending"}
 
 
-### GET service With ViewSet
-GET  http://127.0.0.1:8000/api/service/39/
-Content-Type: application/json 
-Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb 
-
-{}
-
-### service Add With ViewSet
-POST  http://127.0.0.1:8000/api/service/
-Content-Type: application/json 
-Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb 
-
-{"name": "test ADD service VIA ViewSet","employee": 6,"description": "test service18","servie_type": 2,"subtype": 8,"servie_location": 1,"priority_level": 4, "device": 1}
-
-### service Update With ViewSet
-PATCH  http://127.0.0.1:8000/api/service/26/
-Content-Type: application/json 
-Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb 
-
-{"name": "Teest service EDited", "state": "pending"}
-
-### Manager Service Process
+### Manager Process Service:
 POST http://127.0.0.1:8000/process-service-mgr
 Content-Type: application/json 
 Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb 
 
 {"id": 39, "worker": 7, "state": "approved", "reason": "Some Damn Reason"}
 
-###
+
+### Tech Process Service:
 POST http://127.0.0.1:8000/process-service-tech
 Content-Type: application/json 
 Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb 
 
 {"id": 39, "diagnose": "diag", "solution": "solution", "notes": "notes", "state": "ended"}
 
-###
+
+### Client Add Feedback:
 POST http://127.0.0.1:8000/add-feedback
 Content-Type: application/json 
 Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb 
 
 {"name": "test feedback 39","service": 39,"rate": 4,"review": "Test Review for the test feedback"}
 
-###
+
+### Manager View Archived Services
 GET http://127.0.0.1:8000/archive-service
 Content-Type: application/json 
 Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb 
 
 {}
 
-###
+
+### Manager Archive Service
 POST http://127.0.0.1:8000/archive-service
 Content-Type: application/json 
 Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb 
 
 {"id": 39, "state": "closed"}
 
-###
+
+
+################
+##  ViewSets  ##
+################
+
+### GET All services With ViewSet
+GET  http://127.0.0.1:8000/api/service/
+Content-Type: application/json 
+Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb 
+
+{}
+
+
+### Add service With ViewSet
+POST  http://127.0.0.1:8000/api/service/
+Content-Type: application/json 
+Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb 
+
+{"name": "test ADD service VIA ViewSet","employee": 6,"description": "test service18","servie_type": 2,"subtype": 8,"servie_location": 1,"priority_level": 4, "device": 1}
+
+
+### Update service With ViewSet
+PATCH  http://127.0.0.1:8000/api/service/26/
+Content-Type: application/json 
+Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb 
+
+{"name": "Teest service EDited With ViewSet", "state": "started"}
+
+
+### GET One service By ID With ViewSet
+GET  http://127.0.0.1:8000/api/service/26/
+Content-Type: application/json 
+Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb 
+
+{}
+
+
+### Get Employee By ID:
+GET http://127.0.0.1:8000/api/employee/8
+Content-Type: application/json
+Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
+
+{}
+
+### Get Service By ID:
+GET http://127.0.0.1:8000/api/service/1
+Content-Type: application/json
+Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
+
+{}
+
+### Get All Feedbacks:
+GET http://127.0.0.1:8000/api/feedback
+Content-Type: application/json
+Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
+
+{}
+
+### Get Department By ID:
+GET http://127.0.0.1:8000/api/department/1
+Content-Type: application/json
+Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
+
+{}
+
+
+
+####################
+### Stats & Reports
+####################
+
+### GET System Current Statistics:
+GET http://127.0.0.1:8000/stats
+Content-Type: application/json
+Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
+
+{}
+
+### GET Devices Reports
+GET http://127.0.0.1:8000/reports/device?
+Content-Type: application/json
+Authorization: token f72f4f9c55b84537c753239753679d7e77e7cf61
+
+{}
+
+
+### GET Feedbacks Reports
+GET http://127.0.0.1:8000/reports/feedback
+Content-Type: application/json
+Authorization: token f72f4f9c55b84537c753239753679d7e77e7cf61
+
+{}
+
+
+### GET Services Reports
+GET http://127.0.0.1:8000/reports/service
+Content-Type: application/json
+Authorization: token f72f4f9c55b84537c753239753679d7e77e7cf61
+
+{}
+
+
+### GET Service By Tech Reports
+GET http://127.0.0.1:8000/reports/service-tech
+Content-Type: application/json
+Authorization: token f72f4f9c55b84537c753239753679d7e77e7cf61
+
+{}
