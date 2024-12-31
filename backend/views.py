@@ -319,44 +319,6 @@ def edit_service_client(request, *args, **kwargs):
     return Response({"message": "Invalid"}, status=status.HTTP_400_BAD_REQUEST)
 
 
-# Add Service1
-@api_view(['POST'])
-@authentication_classes([SessionAuthentication, TokenAuthentication])
-@permission_classes([IsAuthenticated])
-def add_service1(request):
-    service = Service()
-
-    employee = get_object_or_404(
-        Employee, pk=request.data['client_id'])
-    servie_type = get_object_or_404(
-        ServiceType, pk=request.data['service_type_id'])
-    subtype = get_object_or_404(
-        Subtype, pk=request.data['subtype_id'])
-    servie_location = get_object_or_404(
-        ServiceLocation, pk=request.data['service_location_id'])
-    if request.data['device_id'] != 0:
-        device = get_object_or_404(
-            Device, pk=request.data['device_id'])
-        service.device = device
-    priority_level = get_object_or_404(
-        PriorityLevel, pk=request.data['priority_level_id'])
-    print(request.data)
-
-    print(request.data['client_id'])
-
-    service.employee = employee
-    service.name = request.data['name']
-    service.description = request.data['description']
-    service.servie_type = servie_type
-    service.subtype = subtype
-    service.servie_location = servie_location
-    service.priority_level = priority_level
-
-    service.save()
-
-    return Response({"message": "Service Added"}, status=status.HTTP_200_OK)
-
-
 # Manager Service Process
 @api_view(['POST'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])

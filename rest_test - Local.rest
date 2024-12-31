@@ -127,13 +127,6 @@ Content-Type: application/json
 Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb 
 
 {"id":"5"} 
-###
-
-POST http://127.0.0.1:8000/add-service1
-Content-Type: application/json 
-Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb 
-
-{"name": "test service","client_id": "6","description": "test service","service_type_id": "1","subtype_id": "10","service_location_id": "2","priority_level_id": "2","device_id": 0}
 
 ### Add Service
 POST http://127.0.0.1:8000/add-service
