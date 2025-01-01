@@ -35,6 +35,7 @@ urlpatterns = [
     path("employee/<int:id>", views.get_employee_by_id),
     path("service", views.get_services),
     path("service/<int:id>", views.get_service_by_id),
+    path("active-service", views.get_active_services),
     path("stats", stats.get_stats),
     path("add-service", views.add_service),
     path("edit-service-client", views.edit_service_client),

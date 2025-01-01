@@ -14,6 +14,7 @@ from .reports import *
 from .stats import *
 from django.db.models import Sum, Count, Avg
 from backend.fcm.messaging import sendFcm
+from django.db.models import Q
 
 
 def index(request):
@@ -161,6 +162,17 @@ def get_service_by_id(request, id):
     return Response({"service": serializer.data})
 
 
+# Get Active Services:
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def get_active_services(request):
+    # services = Service.objects.all().exclude(state='archived')
+    services = Service.objects.filter(~Q(state='archived'))
+    serializer = ServiceSerializer(services, many=True)
+    return Response({"services": serializer.data})
+
+
 # Get Employee Devices:
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
@@ -189,7 +201,7 @@ def get_employee_services(request):
 @permission_classes([IsAuthenticated])
 def add_service(request, *args, **kwargs):
     client = get_object_or_404(Employee, pk=request.data.get('employee'))
-    manager = get_object_or_404(Employee, role='manager')
+    manager = get_object_or_404(Employee, role__name='manager')
     serializer = ServiceSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         # print(serializer.validated_data)
