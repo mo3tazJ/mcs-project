@@ -42,9 +42,8 @@ def send_notification(request):
 @api_view(['POST'])
 def log_in(request):
     employee = get_object_or_404(Employee, username=request.data['username'])
-
     if not employee.check_password(request.data['password']):
-        return Response({"detail": "Not Found"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"detail": "Not Allowed"}, status=status.HTTP_400_BAD_REQUEST)
     token, created = Token.objects.get_or_create(user=employee)
     # session_hash = employee.get_session_auth_hash()
 
@@ -62,12 +61,11 @@ def log_out(request):
     # token = Token.objects.get(user=employee)
     # token.delete()
     # session_hash = employee.get_session_auth_hash()
-
-    if employee.fcm_token:
-        employee.fcm_token = ""
-        employee.save()
     if request.user.auth_token:
         request.user.auth_token.delete()
+        if employee.fcm_token:
+            employee.fcm_token = ""
+            employee.save()
         return Response({"Details": "Logged Out!"}, status=status.HTTP_200_OK)
     else:
         return Response({"Details": "Not Logged In!"}, status=status.HTTP_400_BAD_REQUEST)
@@ -132,20 +130,28 @@ def get_employees(request):
 # Get Employee By ID:
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
-@permission_classes([IsAuthenticated])  # , IsAdminUser
+@permission_classes([IsAuthenticated])
 def get_employee_by_id(request, id):
     employee = get_object_or_404(Employee, pk=id)
-    empdevices = Device.objects.filter(employee=id)
-    deviceserialized = DeviceSerializer(empdevices, many=True)
     serializer = EmployeeSerializer(employee)
     return Response({"employee": serializer.data})
+
+
+# Get Tech Employees:
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated, IsAdminUser])
+def get_tech_employees(request):
+    employees = Employee.objects.filter(role__name='Tech')
+    serialized = EmployeeSerializer(employees, many=True)
+    return Response({"employees": serialized.data})
 
 
 # Service:
 # Get All Services:
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated, IsAdminUser])
 def get_services(request):
     services = Service.objects.all()
     serializer = ServiceSerializer(services, many=True)
@@ -165,7 +171,7 @@ def get_service_by_id(request, id):
 # Get Active Services:
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated, IsAdminUser])
 def get_active_services(request):
     # services = Service.objects.all().exclude(state='archived')
     services = Service.objects.filter(~Q(state='archived'))
@@ -187,8 +193,9 @@ def get_pending_services(request):
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def get_employee_devices(request):
-    emp = get_object_or_404(Employee, pk=request.data.get('id'))
+def get_employee_devices(request, id):
+    # emp = get_object_or_404(Employee, pk=request.data.get('id'))
+    emp = get_object_or_404(Employee, pk=id)
     empdevices = Device.objects.filter(employee=emp)
     devserializer = DeviceSerializer(empdevices, many=True)
     return Response({"devices": devserializer.data})
@@ -198,8 +205,9 @@ def get_employee_devices(request):
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def get_employee_services(request):
-    emp = get_object_or_404(Employee, pk=request.data.get('id'))
+def get_employee_services(request, id):
+    # emp = get_object_or_404(Employee, pk=request.data.get('id'))
+    emp = get_object_or_404(Employee, pk=id)
     empservices = Service.objects.filter(employee=emp)
     srvserializer = ServiceSerializer(empservices, many=True)
     return Response({"services": srvserializer.data})
@@ -219,13 +227,13 @@ def add_service(request, *args, **kwargs):
         # Notification:
         fcm = manager.fcm_token
         title = "New Service Request"
-        body = f"Client '{client.get_full_name()}' Added A New Service Request"
+        body = f"Client '{client.get_full_name()}' Added A New Service Request ''"
         print(title)
         print(body)
         print(fcm)
         # sendFcm(fcm= fcm, title= title, body=body)
 
-        return Response({"message": "Service Added"})
+        return Response({"message": "Service Added", "data": serializer.data})
     return Response({"message": "Invalid"}, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -236,7 +244,7 @@ def add_service(request, *args, **kwargs):
 def edit_service_client(request, *args, **kwargs):
     service = get_object_or_404(Service, pk=request.data.get('id'))
     serializer = ServiceSerializer(data=request.data)
-    if request.data.get('state') == 'pending':
+    if service.state == 'pending':
         if serializer.is_valid(raise_exception=True):
             vd = serializer.validated_data
             serializer.update(instance=service, validated_data=vd)
@@ -248,53 +256,47 @@ def edit_service_client(request, *args, **kwargs):
 # Manager Process Service
 @api_view(['POST'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
-@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated, IsAdminUser])
 def process_service_mgr(request):
     service = get_object_or_404(Service, pk=request.data.get('id'))
-    client = get_object_or_404(
-        Employee, pk=service.employee.id)
-    new_state = request.data.get('state')
-    if new_state == "approved":
-        worker = get_object_or_404(
-            Employee, pk=request.data.get('worker'))
-        service.worker = worker
-        service.state = new_state
-        service.save()
-        # Notification For Tech
-        fcm = worker.fcm_token
-        title = "New Assignement"
-        body = f"You Have A New Service Assignement"
-        print(title)
-        print(body)
-        print(fcm)
-        # sendFcm(fcm= fcm, title= title, body=body)
+    if not request.data.get('name'):
+        request.data['name'] = service.name
+    if not request.data.get('description'):
+        request.data['description'] = service.description
+    serializer = ServiceSerializer(data=request.data)
+    if serializer.is_valid(raise_exception=True):
+        vd = serializer.validated_data
+        serializer.update(instance=service, validated_data=vd)
+        serialized = ServiceSerializer(service)
 
-        # Notification For Client
-        fcm = client.fcm_token
-        title = "Request Approved"
-        body = f"Your Service Request is Approved"
-        print(title)
-        print(body)
-        print(fcm)
-        # sendFcm(fcm= fcm, title= title, body=body)
-
-        serializer = ServiceSerializer(service)
-        return Response({"message": "Service Approved", "data": serializer.data}, status=status.HTTP_200_OK)
-    elif new_state == "rejected":
-        service.reason = request.data.get('reason')
-        service.state = new_state
-        service.save()
-        # Notification
-        fcm = client.fcm_token
-        title = "Request Rejected"
-        body = f"Reason: {service.reason}"
-        print(title)
-        print(body)
-        print(fcm)
-        # sendFcm(fcm= fcm, title= title, body=body)
-
-        serializer = ServiceSerializer(service)
-        return Response({"message": "Service Rejected", "data": serializer.data}, status=status.HTTP_200_OK)
+        if service.state == "approved":
+            # Notification For Tech
+            fcm = service.worker.fcm_token
+            title = "New Assignement"
+            body = f"You Have A New Service Assignement: '{service.name}'"
+            print(title)
+            print(body)
+            print(fcm)
+            # sendFcm(fcm= fcm, title= title, body=body)
+            # Notification For Client
+            fcm = service.employee.fcm_token
+            title = "Request Approved"
+            body = f"Dear '{service.employee}': Your Service Request '{service.name}' was Approved"
+            print(title)
+            print(body)
+            print(fcm)
+            # sendFcm(fcm= fcm, title= title, body=body)
+            return Response({"message": "Service Approved", "data": serialized.data}, status=status.HTTP_200_OK)
+        elif service.state == "rejected":
+            # Notification For Client
+            fcm = service.employee.fcm_token
+            title = "Request Rejected"
+            body = f"Dear '{service.employee}': Your Service Request '{service.name}' was Rejected \nReason: {service.reason}"
+            print(title)
+            print(body)
+            print(fcm)
+            # sendFcm(fcm= fcm, title= title, body=body)
+            return Response({"message": "Service Request Rejected", "data": serialized.data}, status=status.HTTP_200_OK)
     return Response({"message": "Invalid State, Not In ['rejected','approved']"}, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -315,44 +317,46 @@ def view_service_tech(request, id):
 @permission_classes([IsAuthenticated])
 def process_service_tech(request):
     service = get_object_or_404(Service, pk=request.data.get('id'))
+    if not request.data.get('name'):
+        request.data['name'] = service.name
+    if not request.data.get('description'):
+        request.data['description'] = service.description
     serializer = ServiceSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         vd = serializer.validated_data
         serializer.update(instance=service, validated_data=vd)
         serialized = ServiceSerializer(service)
 
-    # service.state = request.data.get('state')
-    # service.diagnose = request.data.get('diagnose')
-    # service.solution = request.data.get('solution')
-    # service.notes = request.data.get('notes')
-    # service.save()
-    print(service)
-    print(serialized.data)
-
-    # Notification
-    if service.state == 'started':
-        fcm = "fcm"
-        title = "Service Process Started"
-        body = f"Dear {service.employee}: Your Service {service.name} Process Has Started"
-        print(title)
-        print(body)
-        # sendFcm(fcm= fcm, title= title, body=body)
-    if service.state == 'ended':
-        fcm = "fcm"
-        title = "Service Process Ended"
-        body = f"Dear {service.employee}: Your Service {service.name} Process Has Ended"
-        print(title)
-        print(body)
-        # sendFcm(fcm= fcm, title= title, body=body)
-    return Response({"message": "Service Updated", "data": serialized.data}, status=status.HTTP_200_OK)
-
+        # Notification
+        if service.state == 'started':
+            fcm = service.employee.fcm_token
+            title = "Service Process Started"
+            body = f"Dear '{service.employee}': Your Service Request '{service.name}' Process Has Started"
+            print(title)
+            print(body)
+            print(fcm)
+            # sendFcm(fcm= fcm, title= title, body=body)
+            return Response({"message": "Service Request Process Started", "data": serialized.data}, status=status.HTTP_200_OK)
+        if service.state == 'ended':
+            fcm = service.employee.fcm_token
+            title = "Service Process Ended"
+            body = f"Dear '{service.employee}': Your Service Request '{service.name}' Process Has Ended, Please Give Us Your Feedback"
+            print(title)
+            print(body)
+            print(fcm)
+            # sendFcm(fcm= fcm, title= title, body=body)
+            return Response({"message": "Service Request Process Ended", "data": serialized.data}, status=status.HTTP_200_OK)
+    return Response({"message": "Invalid Data"}, status=status.HTTP_400_BAD_REQUEST)
 
 # Client Add Feedback:
+
+
 @api_view(['POST'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def add_feedback(request, *args, **kwargs):
     service = get_object_or_404(Service, pk=request.data.get('service'))
+    manager = get_object_or_404(Employee, role__name='Manager')
     serializer = FeedbackSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         instance = serializer.save()
@@ -360,14 +364,15 @@ def add_feedback(request, *args, **kwargs):
         service.state = 'closed'
         service.save()
         # Notification
-        fcm = "fcm"
+        fcm = manager.fcm_token
         title = "Feedback Added & Service Closed"
-        body = f"Client {service.employee} Has Rated The Service {service.name}"
+        body = f"Client '{service.employee}' Has Rated The Service '{service.name}'"
         print(title)
         print(body)
+        print(fcm)
         # sendFcm(fcm= fcm, title= title, body=body)
 
-        return Response({"message": "Feedback Added & Service Closed"})
+        return Response({"message": "Feedback Added & Service Closed", "data": serializer.data})
     return Response({"message": "Invalid"}, status=status.HTTP_400_BAD_REQUEST)
 
 
