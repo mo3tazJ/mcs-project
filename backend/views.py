@@ -173,6 +173,16 @@ def get_active_services(request):
     return Response({"services": serializer.data})
 
 
+# Get Pending Services (Manager/SysAdmin):
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated, IsAdminUser])
+def get_pending_services(request):
+    services = Service.objects.filter(state='pending')
+    serializer = ServiceSerializer(services, many=True)
+    return Response({"services": serializer.data})
+
+
 # Get Employee Devices:
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
@@ -201,7 +211,7 @@ def get_employee_services(request):
 @permission_classes([IsAuthenticated])
 def add_service(request, *args, **kwargs):
     client = get_object_or_404(Employee, pk=request.data.get('employee'))
-    manager = get_object_or_404(Employee, role__name='manager')
+    manager = get_object_or_404(Employee, role__name='Manager')
     serializer = ServiceSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         # print(serializer.validated_data)
@@ -288,7 +298,18 @@ def process_service_mgr(request):
     return Response({"message": "Invalid State, Not In ['rejected','approved']"}, status=status.HTTP_400_BAD_REQUEST)
 
 
-# Tech Process Service
+# Tech View Services:
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def view_service_tech(request, id):
+    service = Service.objects.filter(
+        worker=id, state__in=['approved', 'started'])
+    serializer = ServiceSerializer(service, many=True)
+    return Response({"service": serializer.data})
+
+
+# Tech Process Service:
 @api_view(['POST'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
