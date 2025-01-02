@@ -8,11 +8,17 @@ Content-Type: application/json
 
 {"username": "maan", "password": "maan@admin", "fcm_token": "maan fcm_token"}
 
-### Login
+### Login: Tech Login 
 POST http://127.0.0.1:8000/login
 Content-Type: application/json
 
 {"username": "alaa", "password": "alaa@admin", "fcm_token": "alaa fcm_token"}
+
+### Login: Tech Login 
+POST http://127.0.0.1:8000/login
+Content-Type: application/json
+
+{"username": "george", "password": "george@admin", "fcm_token": "george fcm_token"}
 
 ### Login: Client Login 
 POST http://127.0.0.1:8000/login

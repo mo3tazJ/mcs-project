@@ -217,12 +217,11 @@ def add_service(request, *args, **kwargs):
     manager = get_object_or_404(Employee, role__name='Manager')
     serializer = ServiceSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
-        # print(serializer.validated_data)
         instance = serializer.save()
         # Notification:
         fcm = manager.fcm_token
         title = "New Service Request"
-        body = f"Client '{client.get_full_name()}' Added A New Service Request ''"
+        body = f"Client '{client.get_full_name()}' Added A New Service Request '{serializer.data.get('name')}'"
         print(title)
         print(body)
         print(fcm)
@@ -276,7 +275,7 @@ def process_service_mgr(request):
             # Notification For Client
             fcm = service.employee.fcm_token
             title = "Request Approved"
-            body = f"Dear '{service.employee}': Your Service Request '{service.name}' was Approved"
+            body = f"Dear '{service.employee}': Your Service Request '{service.name}' Has Approved"
             print(title)
             print(body)
             print(fcm)
@@ -286,7 +285,7 @@ def process_service_mgr(request):
             # Notification For Client
             fcm = service.employee.fcm_token
             title = "Request Rejected"
-            body = f"Dear '{service.employee}': Your Service Request '{service.name}' was Rejected \nReason: {service.reason}"
+            body = f"Dear '{service.employee}': Your Service Request '{service.name}' Has Rejected \nReason: {service.reason}"
             print(title)
             print(body)
             print(fcm)
@@ -343,9 +342,8 @@ def process_service_tech(request):
             return Response({"message": "Service Request Process Ended", "data": serialized.data}, status=status.HTTP_200_OK)
     return Response({"message": "Invalid Data"}, status=status.HTTP_400_BAD_REQUEST)
 
+
 # Client Add Feedback:
-
-
 @api_view(['POST'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
@@ -355,7 +353,6 @@ def add_feedback(request, *args, **kwargs):
     serializer = FeedbackSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         instance = serializer.save()
-        # print(serializer.data)
         service.state = 'closed'
         service.save()
         # Notification
@@ -387,7 +384,8 @@ class ArchiveServiceAPIView(APIView):
             service.state = 'archived'
             service.save()
             return Response({"message": "Service Archived"}, status=status.HTTP_200_OK)
-
+        if service.state == "archived":
+            return Response({"message": "Service Already Archived"}, status=status.HTTP_400_BAD_REQUEST)
         return Response({"message": "Service isn't Closed, Can not be Archived"}, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -494,5 +492,5 @@ class ServiceViewSet(viewsets.ModelViewSet):
 class FeedbackViewSet(viewsets.ModelViewSet):
     queryset = Feedback.objects.all()
     serializer_class = FeedbackSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAdminUser]
     authentication_classes = [SessionAuthentication, TokenAuthentication]

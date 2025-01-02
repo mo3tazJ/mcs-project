@@ -21,7 +21,7 @@ Content-Type: application/json
 Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
 
 ### Get Employee By ID:
-GET http://127.0.0.1:8000/employee/8
+GET http://127.0.0.1:8000/employee/10
 Content-Type: application/json
 Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
 
@@ -31,7 +31,7 @@ Content-Type: application/json
 Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
 
 ### Get Service By ID:
-GET http://127.0.0.1:8000/service/44
+GET http://127.0.0.1:8000/service/47
 Content-Type: application/json
 Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
 
@@ -50,7 +50,7 @@ POST http://127.0.0.1:8000/add-service
 Content-Type: application/json 
 Authorization: token a7921ac167bf57bbc1f6911293b1b54fbaf93f1d 
 
-{"name": "Debug Service Name","description": "Debug Service Description","employee": 9,"servie_type": 2,"subtype": 3,"servie_location": 3,"priority_level": 3, "device": 4}
+{"name": "Debug Service Name3","description": "Debug Service Description","employee": 9,"servie_type": 2,"subtype": 3,"servie_location": 3,"priority_level": 3, "device": 4}
 
 
 ### Edit Pending Service By Client: Required (id, name, description)
@@ -91,15 +91,21 @@ Authorization: token a7921ac167bf57bbc1f6911293b1b54fbaf93f1d
 {"name": "feedback 46","service": 46,"rate": 4,"review": "Test Review for the test feedback"}
 
 
+### Manager View All Feedbacks: Using ViewSets
+GET http://127.0.0.1:8000/api/feedback
+Content-Type: application/json
+Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
+
+
 ### Manager View Active Services
 GET http://127.0.0.1:8000/active-service
 Content-Type: application/json
-Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
+Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
 
 ### Manager/SysAdmin View Pending Services
 GET http://127.0.0.1:8000/pending-service
 Content-Type: application/json
-Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
+Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
 
 ### Manager View Archived Services
 GET http://127.0.0.1:8000/archive-service
