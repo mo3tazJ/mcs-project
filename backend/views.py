@@ -29,20 +29,14 @@ def adminPage(request):
     return render(request, "backend/admin-page.html")
 
 
-# notification test
-@api_view(['POST'])
-def send_notification(request):
-    sendFcm(fcm="cByANuUuSgSU71W6ptMWOD:APA91bHelhpay1mLD88266asNK44T3Hd4VAS3BBzDeH1aOqNyyNX0iSaKtjyHQOJc58nlT4TsDm5Sm4ZWVS3kEVfbYK0NOoYGXp4shv1LLwRbrin4qA4CGk", title="title", body="body")
-    return Response({"token": "token.key", "user": "emp_serializer.data"})
-
-
 ################################
 ##  Login And Authintication  ##
 ################################
 @api_view(['POST'])
 def log_in(request):
-    employee = get_object_or_404(Employee, username=request.data['username'])
-    if not employee.check_password(request.data['password']):
+    employee = get_object_or_404(
+        Employee, username=request.data.get('username'))
+    if not employee.check_password(request.data.get('password')):
         return Response({"detail": "Not Allowed"}, status=status.HTTP_400_BAD_REQUEST)
     token, created = Token.objects.get_or_create(user=employee)
     # session_hash = employee.get_session_auth_hash()
@@ -57,7 +51,8 @@ def log_in(request):
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def log_out(request):
-    employee = get_object_or_404(Employee, username=request.data['username'])
+    employee = get_object_or_404(
+        Employee, username=request.data.get('username'))
     # token = Token.objects.get(user=employee)
     # token.delete()
     # session_hash = employee.get_session_auth_hash()
@@ -379,7 +374,7 @@ def add_feedback(request, *args, **kwargs):
 # Manager Service Archive
 class ArchiveServiceAPIView(APIView):
     authentication_classes = [SessionAuthentication, TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsAdminUser]
 
     def get(self, request, *args, **kwargs):
         services = Service.objects.filter(state="archived")
@@ -388,7 +383,7 @@ class ArchiveServiceAPIView(APIView):
 
     def post(self, request, *args, **kwargs):
         service = get_object_or_404(Service, pk=request.data.get('id'))
-        if request.data.get('state') == "closed":
+        if service.state == "closed":
             service.state = 'archived'
             service.save()
             return Response({"message": "Service Archived"}, status=status.HTTP_200_OK)

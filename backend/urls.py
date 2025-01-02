@@ -20,7 +20,6 @@ router.register("api/feedback", viewset=views.FeedbackViewSet)
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("send-notification", views.send_notification, name="send-notification"),
     path("about", views.about, name="about"),
     path("admin-page", views.adminPage, name="admin-page"),
     path("login", views.log_in, name="login"),
