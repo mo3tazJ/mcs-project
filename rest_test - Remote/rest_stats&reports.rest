@@ -5,7 +5,7 @@
 ### GET System Current Statistics:
 GET https://mcsproject.pythonanywhere.com/stats
 Content-Type: application/json
-Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
+Authorization: token 693279ec9baddf5aadb9de39bf6946adc10dfa89
 
 
 ### GET Devices Reports

@@ -82,18 +82,18 @@ WSGI_APPLICATION = 'mcs.wsgi.application'
 # Database
 
 # External Host
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mcsdb',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',
-        'PORT': '3306'
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'mcsdb',
+#         'USER': 'root',
+#         'PASSWORD': 'root',
+#         'HOST': 'localhost',
+#         'PORT': '3306'
+#     }
+# }
 
-# Default Settings
+# Django Default Settings
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -103,10 +103,18 @@ DATABASES = {
 
 
 # Python Decouple Settings
+DATABASES = {
+    'default': config(
+        'DATABASE_URL',
+        default=BASE_DIR / 'db.sqlite3',
+        cast=db_url
+    )
+}
+# Python Decouple Default Settings
 # DATABASES = {
 #     'default': config(
 #         'DATABASE_URL',
-#         default='sqlite:///' + BASE_DIR.child('db1.sqlite3'),
+#         default='sqlite:///' + BASE_DIR.child('db.sqlite3'),
 #         cast=db_url
 #     )
 # }

@@ -149,7 +149,8 @@ def get_tech_employees(request):
 @permission_classes([IsAuthenticated, IsAdminUser])
 def get_services(request):
     services = Service.objects.all()
-    serializer = ServiceSerializer(services, many=True)
+    # serializer = ServiceSerializer(services, many=True)
+    serializer = FullServiceSerializer(services, many=True)
     return Response({"services": serializer.data})
 
 
@@ -159,7 +160,8 @@ def get_services(request):
 @permission_classes([IsAuthenticated])
 def get_service_by_id(request, id):
     service = get_object_or_404(Service, pk=id)
-    serializer = ServiceSerializer(service)
+    # serializer = ServiceSerializer(service)
+    serializer = FullServiceSerializer(service)
     return Response({"service": serializer.data})
 
 
@@ -170,7 +172,8 @@ def get_service_by_id(request, id):
 def get_active_services(request):
     # services = Service.objects.all().exclude(state='archived')
     services = Service.objects.filter(~Q(state='archived'))
-    serializer = ServiceSerializer(services, many=True)
+    # serializer = ServiceSerializer(services, many=True)
+    serializer = FullServiceSerializer(services, many=True)
     return Response({"services": serializer.data})
 
 
@@ -180,7 +183,8 @@ def get_active_services(request):
 @permission_classes([IsAuthenticated, IsAdminUser])
 def get_pending_services(request):
     services = Service.objects.filter(state='pending')
-    serializer = ServiceSerializer(services, many=True)
+    # serializer = ServiceSerializer(services, many=True)
+    serializer = FullServiceSerializer(services, many=True)
     return Response({"services": serializer.data})
 
 
@@ -204,7 +208,8 @@ def get_employee_services(request, id):
     # emp = get_object_or_404(Employee, pk=request.data.get('id'))
     emp = get_object_or_404(Employee, pk=id)
     empservices = Service.objects.filter(employee=emp)
-    srvserializer = ServiceSerializer(empservices, many=True)
+    # srvserializer = ServiceSerializer(empservices, many=True)
+    srvserializer = FullServiceSerializer(empservices, many=True)
     return Response({"services": srvserializer.data})
 
 
@@ -301,7 +306,8 @@ def process_service_mgr(request):
 def view_approved_service_tech(request, id):
     service = Service.objects.filter(
         worker=id, state='approved')
-    serializer = ServiceSerializer(service, many=True)
+    # serializer = ServiceSerializer(service, many=True)
+    serializer = FullServiceSerializer(service, many=True)
     return Response({"service": serializer.data})
 
 
@@ -312,7 +318,8 @@ def view_approved_service_tech(request, id):
 def view_started_service_tech(request, id):
     service = Service.objects.filter(
         worker=id, state='started')
-    serializer = ServiceSerializer(service, many=True)
+    # serializer = ServiceSerializer(service, many=True)
+    serializer = FullServiceSerializer(service, many=True)
     return Response({"service": serializer.data})
 
 
@@ -386,7 +393,8 @@ class ArchiveServiceAPIView(APIView):
 
     def get(self, request, *args, **kwargs):
         services = Service.objects.filter(state="archived")
-        serializer = ServiceSerializer(services, many=True)
+        # serializer = ServiceSerializer(services, many=True)
+        serializer = FullServiceSerializer(services, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
@@ -494,7 +502,8 @@ class PriorityLevelViewSet(viewsets.ModelViewSet):
 # Service Viewset
 class ServiceViewSet(viewsets.ModelViewSet):
     queryset = Service.objects.all()
-    serializer_class = ServiceSerializer
+    serializer_class = FullServiceSerializer
+    # serializer_class = ServiceSerializer
     permission_classes = [IsAuthenticated]
     authentication_classes = [SessionAuthentication, TokenAuthentication]
 

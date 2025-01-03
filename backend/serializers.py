@@ -32,7 +32,7 @@ class SvcEmployeeSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = Employee
         # fields = "__all__"
-        fields = ['fullname', 'username', 'first_name', 'last_name']
+        fields = ['id', 'fullname']
 
 
 class DeviceTypeSerializer(serializers.ModelSerializer):
@@ -62,7 +62,7 @@ class SvcDeviceSerializer(serializers.ModelSerializer):
 
     class Meta(object):
         model = Device
-        fields = ("name",)
+        fields = ("id", "name",)
 
 
 class AccessorySerializer(serializers.ModelSerializer):
@@ -109,9 +109,12 @@ class ServiceSerializer(serializers.ModelSerializer):
         # exclude = ['created_at', 'updatet_at']
 
 
-class SvcServiceSerializer(serializers.ModelSerializer):
+class FullServiceSerializer(serializers.ModelSerializer):
 
-    # subtype = SubtypeSerializer()
+    employee = SvcEmployeeSerializer()
+    worker = SvcEmployeeSerializer()
+    device = SvcDeviceSerializer()
+
     class Meta(object):
         model = Service
         fields = "__all__"
@@ -121,7 +124,19 @@ class SvcServiceSerializer(serializers.ModelSerializer):
     #     return super(SvcServiceSerializer, self).create(validated_data)
 
 
+class FBServiceSerializer(serializers.ModelSerializer):
+
+    employee = SvcEmployeeSerializer()
+    worker = SvcEmployeeSerializer()
+
+    class Meta(object):
+        model = Service
+        fields = ['id', 'name', 'employee', 'worker']
+
+
 class FeedbackSerializer(serializers.ModelSerializer):
+
+    service = FBServiceSerializer()
 
     class Meta(object):
         model = Feedback
