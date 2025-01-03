@@ -294,13 +294,24 @@ def process_service_mgr(request):
     return Response({"message": "Invalid State, Not In ['rejected','approved']"}, status=status.HTTP_400_BAD_REQUEST)
 
 
-# Tech View Services:
+# Tech View Approved Services:
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def view_service_tech(request, id):
+def view_approved_service_tech(request, id):
     service = Service.objects.filter(
-        worker=id, state__in=['approved', 'started'])
+        worker=id, state='approved')
+    serializer = ServiceSerializer(service, many=True)
+    return Response({"service": serializer.data})
+
+
+# Tech View Started Services:
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def view_started_service_tech(request, id):
+    service = Service.objects.filter(
+        worker=id, state='started')
     serializer = ServiceSerializer(service, many=True)
     return Response({"service": serializer.data})
 

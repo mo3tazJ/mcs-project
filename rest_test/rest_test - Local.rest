@@ -69,8 +69,14 @@ Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
 {"id": 47, "name":"Debug Service Name Edited", "worker": 10, "state": "approved", "reason": ""}
 
 
-### Tech view Services:
-GET http://127.0.0.1:8000/view-service-tech/10
+### Tech View Approved Services:
+GET http://127.0.0.1:8000/view-service-tech/approved/10
+Content-Type: application/json 
+Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b 
+
+
+### Tech View Started Services:
+GET http://127.0.0.1:8000/view-service-tech/started/10
 Content-Type: application/json 
 Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b 
 

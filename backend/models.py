@@ -142,7 +142,8 @@ class AccessoryType(models.Model):
 
 class Device(models.Model):
 
-    name = models.CharField("Device", max_length=100)
+    name = models.CharField("Device", max_length=100, help_text=(
+        "Naming Format: Department Name-Your Name-Device Type"))
     brand = models.CharField("Brand", max_length=100)
     model = models.CharField("Model", max_length=100, blank=True)
     device_type = models.ForeignKey(DeviceType, verbose_name=(
@@ -173,7 +174,8 @@ class Device(models.Model):
 
 class Accessory(models.Model):
 
-    name = models.CharField("Accessory", max_length=100)
+    name = models.CharField("Accessory", max_length=100, help_text=(
+        "Naming Format: Department Name-Your Name-Device Type-Accessory"))
     brand = models.CharField("Brand", max_length=100)
     model = models.CharField("Model", max_length=100, blank=True)
     accessory_type = models.ForeignKey(AccessoryType, verbose_name=(
@@ -267,7 +269,8 @@ class PriorityLevel(models.Model):
 
 class Service(models.Model):
 
-    name = models.CharField("Service Name", max_length=100)
+    name = models.CharField("Service Name", max_length=100, help_text=(
+        "Naming Format: Department Name-Your Name-Device Type-Service"))
     description = models.TextField("Description")
 
     employee = models.ForeignKey(Employee, verbose_name=(
