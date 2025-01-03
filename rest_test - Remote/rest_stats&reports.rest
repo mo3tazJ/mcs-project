@@ -1,0 +1,33 @@
+########################
+###  Stats & Reports  ##
+########################
+
+### GET System Current Statistics:
+GET https://mcsproject.pythonanywhere.com/stats
+Content-Type: application/json
+Authorization: token ae27b42bcaa5bde3b247e8ee66b109cbc380b8cb
+
+
+### GET Devices Reports
+GET https://mcsproject.pythonanywhere.com/reports/device?
+Content-Type: application/json
+Authorization: token f72f4f9c55b84537c753239753679d7e77e7cf61
+
+
+### GET Feedbacks Reports
+GET https://mcsproject.pythonanywhere.com/reports/feedback
+Content-Type: application/json
+Authorization: token f72f4f9c55b84537c753239753679d7e77e7cf61
+
+
+### GET Services Reports
+GET https://mcsproject.pythonanywhere.com/reports/service
+Content-Type: application/json
+Authorization: token f72f4f9c55b84537c753239753679d7e77e7cf61
+
+
+### GET Service By Tech Reports
+GET https://mcsproject.pythonanywhere.com/reports/service-tech
+Content-Type: application/json
+Authorization: token f72f4f9c55b84537c753239753679d7e77e7cf61
+
