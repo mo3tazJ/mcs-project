@@ -100,22 +100,22 @@ WSGI_APPLICATION = 'mcs.wsgi.application'
 # }
 
 # Django Default Settings
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db1.sqlite3',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db1.sqlite3',
+    }
+}
 
 
 # Python Decouple Settings
-DATABASES = {
-    'default': config(
-        'DATABASE_URL',
-        default=BASE_DIR / 'db.sqlite3',
-        cast=db_url
-    )
-}
+# DATABASES = {
+#     'default': config(
+#         'DATABASE_URL',
+#         default=BASE_DIR / 'db.sqlite3',
+#         cast=db_url
+#     )
+# }
 # Python Decouple Default Settings
 # DATABASES = {
 #     'default': config(
