@@ -31,7 +31,7 @@ class SvcEmployeeSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = Employee
         # fields = "__all__"
-        fields = ['id', 'fullname']
+        fields = ['id', 'fullname', 'mobile']
 
 
 class DeviceTypeSerializer(serializers.ModelSerializer):
