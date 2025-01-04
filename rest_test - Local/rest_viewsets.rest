@@ -49,6 +49,18 @@ Content-Type: application/json
 Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
 
 
+### Get All Devices:
+GET http://127.0.0.1:8000/api/device
+Content-Type: application/json
+Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
+
+
+### Get All Subtypes:
+GET http://127.0.0.1:8000/api/subtype
+Content-Type: application/json
+Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
+
+
 ### Get Department By ID:
 GET http://127.0.0.1:8000/api/department/1
 Content-Type: application/json

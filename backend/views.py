@@ -229,7 +229,6 @@ def add_service(request, *args, **kwargs):
         # print(body)
         # print(fcm)
         sendFcm(fcm=fcm, title=title, body=body)
-
         return Response({"message": "Service Added", "data": serializer.data})
     return Response({"message": "Invalid"}, status=status.HTTP_400_BAD_REQUEST)
 

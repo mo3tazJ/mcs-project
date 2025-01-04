@@ -165,6 +165,10 @@ class Device(models.Model):
         verbose_name = ("Device")
         verbose_name_plural = ("Devices")
 
+    def save(self, *args, **kwargs):
+        self.name = f"{self.employee.department.name}-{self.employee.first_name}-{self.device_type}"
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.name
 
@@ -191,6 +195,11 @@ class Accessory(models.Model):
     class Meta:
         verbose_name = ("Accessory")
         verbose_name_plural = ("Accessories")
+
+    def save(self, *args, **kwargs):
+        if self.device:
+            self.name = f"{self.device.name}-{self.accessory_type}"
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -270,7 +279,7 @@ class PriorityLevel(models.Model):
 class Service(models.Model):
 
     name = models.CharField("Service Name", max_length=100, help_text=(
-        "Naming Format: Department Name-Your Name-Device Type-Service"))
+        "Naming Format: Department Name-Your Name-Service Type"))
     description = models.TextField("Description")
 
     employee = models.ForeignKey(Employee, verbose_name=(
@@ -320,6 +329,13 @@ class Service(models.Model):
         verbose_name = ("Service")
         verbose_name_plural = ("Services")
 
+    def save(self, *args, **kwargs):
+        if self.device:
+            self.name = f"{self.device.name}-{self.subtype}"
+        else:
+            self.name = f"{self.employee.department.name}-{self.employee.first_name}-{self.servie_type}-{self.subtype}"
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.name
 
@@ -342,6 +358,10 @@ class Feedback(models.Model):
     class Meta:
         verbose_name = ("Feedback")
         verbose_name_plural = ("Feedbacks")
+
+    def save(self, *args, **kwargs):
+        self.name = f"{self.service.name}-Feedback"
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
