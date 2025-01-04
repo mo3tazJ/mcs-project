@@ -4,7 +4,7 @@
 ################
 
 ### GET All services With ViewSet
-GET  http://127.0.0.1:8000/api/service/46
+GET  http://127.0.0.1:8000/api/service/
 Content-Type: application/json 
 Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b 
 

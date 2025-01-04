@@ -50,7 +50,7 @@ POST http://127.0.0.1:8000/add-service
 Content-Type: application/json 
 Authorization: token a7921ac167bf57bbc1f6911293b1b54fbaf93f1d 
 
-{"name": "Debug Service Name3","description": "Debug Service Description","employee": 9,"servie_type": 2,"subtype": 3,"servie_location": 3,"priority_level": 3, "device": 4}
+{"name": "Debug Service FCM","description": "Debug Service Description","employee": 9,"servie_type": 2,"subtype": 3,"servie_location": 3,"priority_level": 3, "device": 4}
 
 
 ### Edit Pending Service By Client: Required (id, name, description)
@@ -58,7 +58,7 @@ POST http://127.0.0.1:8000/edit-service-client
 Content-Type: application/json 
 Authorization: token a7921ac167bf57bbc1f6911293b1b54fbaf93f1d 
 
-{"id": 47, "name": "Debug Service Name Edited","description": "Debug Service Description Edited"}
+{"id": 51, "name": "Debug Service FCM Edited","description": "Debug Service Description Edited"}
 
 
 ### Manager Process Service: Required (id, name, description, worker, state) (reason if state is rejected)
@@ -66,7 +66,7 @@ POST http://127.0.0.1:8000/process-service-mgr
 Content-Type: application/json 
 Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b 
 
-{"id": 47, "name":"Debug Service Name Edited", "worker": 10, "state": "approved", "reason": ""}
+{"id": 51, "name":"Debug Service Name Edited", "worker": 10, "state": "approved", "reason": ""}
 
 
 ### Tech View Approved Services:
@@ -86,7 +86,7 @@ POST http://127.0.0.1:8000/process-service-tech
 Content-Type: application/json 
 Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b 
 
-{"id": 46, "name":"Ahmad Laptop Test Feedback3", "state": "ended", "diagnose": "diag", "solution": "solution", "notes": "notes"}
+{"id": 51, "state": "ended", "diagnose": "diag", "solution": "solution", "notes": "notes"}
 
 
 ### Client Add Feedback: Required (name, service, rate)
@@ -94,7 +94,7 @@ POST http://127.0.0.1:8000/add-feedback
 Content-Type: application/json 
 Authorization: token a7921ac167bf57bbc1f6911293b1b54fbaf93f1d 
 
-{"name": "feedback 46","service": 46,"rate": 4,"review": "Test Review for the test feedback"}
+{"name": "feedback 51","service": 51,"rate": 4,"review": "Test Review for the test feedback"}
 
 
 ### Manager View All Feedbacks: Using ViewSets
@@ -123,6 +123,6 @@ POST http://127.0.0.1:8000/archive-service
 Content-Type: application/json 
 Authorization: token 69c3dc587573fd7a6e77cba81526eb51f84ae8ec 
 
-{"id": 46}
+{"id": 51}
 
 

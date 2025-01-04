@@ -1,6 +1,6 @@
 from pathlib import Path
 # from unipath import Path
-from decouple import config
+from decouple import config, Csv
 # from unipath import Path
 from dj_database_url import parse as db_url
 
@@ -14,18 +14,24 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY
 
 # SECURITY WARNING: keep the secret key used in production secret!
-
+# Python Decouple Settings
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # In Production stage IS_DEVLOPMENT is set to Flase So DEBUG = False
 
+
+# DEBUG Settings
+# Django Default Settings
 # DEBUG = True
+# Python Decouple Settings
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = [
-    "*",
-]
+# ALLOWED_HOSTS Settings
+# Django Default Settings
+# ALLOWED_HOSTS = ["*",]
+# Python Decouple Settings
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1', cast=Csv())
 
 
 # Application definition

@@ -6,13 +6,11 @@ from rest_framework.response import Response
 from rest_framework import status, viewsets
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
-from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
 from .models import *
 from .serializers import *
 from .reports import *
 from .stats import *
-from django.db.models import Sum, Count, Avg
 from backend.fcm.messaging import sendFcm
 from django.db.models import Q
 
@@ -227,10 +225,10 @@ def add_service(request, *args, **kwargs):
         fcm = manager.fcm_token
         title = "New Service Request"
         body = f"Client '{client.get_full_name()}' Added A New Service Request '{serializer.data.get('name')}'"
-        print(title)
-        print(body)
-        print(fcm)
-        # sendFcm(fcm= fcm, title= title, body=body)
+        # print(title)
+        # print(body)
+        # print(fcm)
+        sendFcm(fcm=fcm, title=title, body=body)
 
         return Response({"message": "Service Added", "data": serializer.data})
     return Response({"message": "Invalid"}, status=status.HTTP_400_BAD_REQUEST)
@@ -247,7 +245,7 @@ def edit_service_client(request, *args, **kwargs):
         if serializer.is_valid(raise_exception=True):
             vd = serializer.validated_data
             serializer.update(instance=service, validated_data=vd)
-            serialized = ServiceSerializer(service)
+            serialized = FullServiceSerializer(service)
             return Response({"message": "Service Updated", "data": serialized.data})
     return Response({"message": "Invalid"}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -266,35 +264,35 @@ def process_service_mgr(request):
     if serializer.is_valid(raise_exception=True):
         vd = serializer.validated_data
         serializer.update(instance=service, validated_data=vd)
-        serialized = ServiceSerializer(service)
+        serialized = FullServiceSerializer(service)
 
         if service.state == "approved":
             # Notification For Tech
             fcm = service.worker.fcm_token
             title = "New Assignement"
             body = f"You Have A New Service Assignement: '{service.name}'"
-            print(title)
-            print(body)
-            print(fcm)
-            # sendFcm(fcm= fcm, title= title, body=body)
+            # print(title)
+            # print(body)
+            # print(fcm)
+            sendFcm(fcm=fcm, title=title, body=body)
             # Notification For Client
             fcm = service.employee.fcm_token
             title = "Request Approved"
             body = f"Dear '{service.employee}': Your Service Request '{service.name}' Has Approved"
-            print(title)
-            print(body)
-            print(fcm)
-            # sendFcm(fcm= fcm, title= title, body=body)
+            # print(title)
+            # print(body)
+            # print(fcm)
+            sendFcm(fcm=fcm, title=title, body=body)
             return Response({"message": "Service Approved", "data": serialized.data}, status=status.HTTP_200_OK)
         elif service.state == "rejected":
             # Notification For Client
             fcm = service.employee.fcm_token
             title = "Request Rejected"
             body = f"Dear '{service.employee}': Your Service Request '{service.name}' Has Rejected \nReason: {service.reason}"
-            print(title)
-            print(body)
-            print(fcm)
-            # sendFcm(fcm= fcm, title= title, body=body)
+            # print(title)
+            # print(body)
+            # print(fcm)
+            sendFcm(fcm=fcm, title=title, body=body)
             return Response({"message": "Service Request Rejected", "data": serialized.data}, status=status.HTTP_200_OK)
     return Response({"message": "Invalid State, Not In ['rejected','approved']"}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -344,19 +342,19 @@ def process_service_tech(request):
             fcm = service.employee.fcm_token
             title = "Service Process Started"
             body = f"Dear '{service.employee}': Your Service Request '{service.name}' Process Has Started"
-            print(title)
-            print(body)
-            print(fcm)
-            # sendFcm(fcm= fcm, title= title, body=body)
+            # print(title)
+            # print(body)
+            # print(fcm)
+            sendFcm(fcm=fcm, title=title, body=body)
             return Response({"message": "Service Request Process Started", "data": serialized.data}, status=status.HTTP_200_OK)
         if service.state == 'ended':
             fcm = service.employee.fcm_token
             title = "Service Process Ended"
             body = f"Dear '{service.employee}': Your Service Request '{service.name}' Process Has Ended, Please Give Us Your Feedback"
-            print(title)
-            print(body)
-            print(fcm)
-            # sendFcm(fcm= fcm, title= title, body=body)
+            # print(title)
+            # print(body)
+            # print(fcm)
+            sendFcm(fcm=fcm, title=title, body=body)
             return Response({"message": "Service Request Process Ended", "data": serialized.data}, status=status.HTTP_200_OK)
     return Response({"message": "Invalid Data"}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -377,12 +375,12 @@ def add_feedback(request, *args, **kwargs):
         fcm = manager.fcm_token
         title = "Feedback Added & Service Closed"
         body = f"Client '{service.employee}' Has Rated The Service '{service.name}'"
-        print(title)
-        print(body)
-        print(fcm)
-        # sendFcm(fcm= fcm, title= title, body=body)
-
-        return Response({"message": "Feedback Added & Service Closed", "data": serializer.data})
+        # print(title)
+        # print(body)
+        # print(fcm)
+        sendFcm(fcm=fcm, title=title, body=body)
+        serialized = FullFeedbackSerializer(instance)
+        return Response({"message": "Feedback Added & Service Closed", "data": serialized.data})
     return Response({"message": "Invalid"}, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -511,6 +509,6 @@ class ServiceViewSet(viewsets.ModelViewSet):
 # Feedback Viewset
 class FeedbackViewSet(viewsets.ModelViewSet):
     queryset = Feedback.objects.all()
-    serializer_class = FeedbackSerializer
+    serializer_class = FullFeedbackSerializer
     permission_classes = [IsAuthenticated, IsAdminUser]
     authentication_classes = [SessionAuthentication, TokenAuthentication]

@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User
 from .models import *
 
 
@@ -135,6 +134,13 @@ class FBServiceSerializer(serializers.ModelSerializer):
 
 
 class FeedbackSerializer(serializers.ModelSerializer):
+
+    class Meta(object):
+        model = Feedback
+        fields = "__all__"
+
+
+class FullFeedbackSerializer(serializers.ModelSerializer):
 
     service = FBServiceSerializer()
 
