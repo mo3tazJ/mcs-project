@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'mcs.wsgi.application'
 
 # Database
 
-# External Host
+# Local MySQL Database
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
