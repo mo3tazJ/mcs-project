@@ -53,20 +53,20 @@ Authorization: token a7921ac167bf57bbc1f6911293b1b54fbaf93f1d
 {"name": "No Name","description": "No Name Service test1","employee": 6,"servie_type": 3,"subtype": 8,"servie_location": 3,"priority_level": 4}
 
 
-### Edit Pending Service By Client: Required (id, name, description)
+### Client Edit Pending/Rejected Service: Required (id, name, description) + in rejected All data to update the service
 POST http://127.0.0.1:8000/edit-service-client
 Content-Type: application/json 
 Authorization: token a7921ac167bf57bbc1f6911293b1b54fbaf93f1d 
 
-{"id": 51, "name": "Debug Service FCM Edited","description": "Debug Service Description Edited"}
+{"id": 55, "name": "Debug Service FCM Edited","description": "Debug Service Description Edited","priority_level": 1}
 
 
-### Manager Process Service: Required (id, name, description, worker, state) (reason if state is rejected)
+### Manager Process Service: Required (id, name, description)( worker, state if approved) (reason if state is rejected)
 POST http://127.0.0.1:8000/process-service-mgr
 Content-Type: application/json 
 Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b 
 
-{"id": 51, "name":"Debug Service Name Edited", "worker": 10, "state": "approved", "reason": ""}
+{"id": 55, "name":"Debug Service Name Edited", "worker": 10, "state": "approved", "reason": "Not Enough Info"}
 
 
 ### Tech View Approved Services:

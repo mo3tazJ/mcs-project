@@ -1,60 +1,60 @@
 
 ### Get All Departments:
-GET http://127.0.0.1:8000/department
+GET https://mcsproject.pythonanywhere.com/department
 Content-Type: application/json
 Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
 
 
 ### Get Department By ID:
-GET http://127.0.0.1:8000/department/2
+GET https://mcsproject.pythonanywhere.com/department/2
 Content-Type: application/json
 Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
 
 ### Get All Employees:
-GET http://127.0.0.1:8000/employee
+GET https://mcsproject.pythonanywhere.com/employee
 Content-Type: application/json
-Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
+Authorization: token f3f3c7edbbba322c8b31f6f5c5d481d98ebf648c
 
 ### Get Tech Employees:
-GET http://127.0.0.1:8000/get-tech-employees
+GET https://mcsproject.pythonanywhere.com/get-tech-employees
 Content-Type: application/json
-Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
+Authorization: token f3f3c7edbbba322c8b31f6f5c5d481d98ebf648c
 
 ### Get Employee By ID:
-GET http://127.0.0.1:8000/employee/10
+GET https://mcsproject.pythonanywhere.com/employee/10
 Content-Type: application/json
 Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
 
 ### Get All Services:
-GET http://127.0.0.1:8000/service
+GET https://mcsproject.pythonanywhere.com/service
 Content-Type: application/json
 Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
 
 ### Get Service By ID:
-GET http://127.0.0.1:8000/service/47
+GET https://mcsproject.pythonanywhere.com/service/47
 Content-Type: application/json
 Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
 
 ### Get Employee Devices:
-GET http://127.0.0.1:8000/get-employee-devices/9
+GET https://mcsproject.pythonanywhere.com/get-employee-devices/9
 Content-Type: application/json
 Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
 
 ### Get Employee Services:
-GET http://127.0.0.1:8000/get-employee-services/9
+GET https://mcsproject.pythonanywhere.com/get-employee-services/9
 Content-Type: application/json
 Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
 
 ### Add Service: Required (name, description, employee, servie_type, servie_location, priority_level) (device if it is needed) 
-POST http://127.0.0.1:8000/add-service
+POST https://mcsproject.pythonanywhere.com/add-service
 Content-Type: application/json 
-Authorization: token a7921ac167bf57bbc1f6911293b1b54fbaf93f1d 
+Authorization: token f3f3c7edbbba322c8b31f6f5c5d481d98ebf648c 
 
-{"name": "Debug Service Name3","description": "Debug Service Description","employee": 9,"servie_type": 2,"subtype": 3,"servie_location": 3,"priority_level": 3, "device": 4}
+{"name": "First Service Name3","description": "Test Service Description 1","employee": 5,"servie_type": 2,"subtype": 3,"servie_location": 3,"priority_level": 3, "device": 1}
 
 
 ### Edit Pending Service By Client: Required (id, name, description)
-POST http://127.0.0.1:8000/edit-service-client
+POST https://mcsproject.pythonanywhere.com/edit-service-client
 Content-Type: application/json 
 Authorization: token a7921ac167bf57bbc1f6911293b1b54fbaf93f1d 
 
@@ -62,7 +62,7 @@ Authorization: token a7921ac167bf57bbc1f6911293b1b54fbaf93f1d
 
 
 ### Manager Process Service: Required (id, name, description, worker, state) (reason if state is rejected)
-POST http://127.0.0.1:8000/process-service-mgr
+POST https://mcsproject.pythonanywhere.com/process-service-mgr
 Content-Type: application/json 
 Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b 
 
@@ -70,19 +70,19 @@ Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
 
 
 ### Tech View Approved Services:
-GET http://127.0.0.1:8000/view-service-tech/approved/10
+GET https://mcsproject.pythonanywhere.com/view-service-tech/approved/10
 Content-Type: application/json 
 Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b 
 
 
 ### Tech View Started Services:
-GET http://127.0.0.1:8000/view-service-tech/started/10
+GET https://mcsproject.pythonanywhere.com/view-service-tech/started/10
 Content-Type: application/json 
 Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b 
 
 
 ### Tech Process Service: Required (id, name, description, state) (diagnose,solution if state is ended)
-POST http://127.0.0.1:8000/process-service-tech
+POST https://mcsproject.pythonanywhere.com/process-service-tech
 Content-Type: application/json 
 Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b 
 
@@ -90,7 +90,7 @@ Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
 
 
 ### Client Add Feedback: Required (name, service, rate)
-POST http://127.0.0.1:8000/add-feedback
+POST https://mcsproject.pythonanywhere.com/add-feedback
 Content-Type: application/json 
 Authorization: token a7921ac167bf57bbc1f6911293b1b54fbaf93f1d 
 
@@ -98,28 +98,28 @@ Authorization: token a7921ac167bf57bbc1f6911293b1b54fbaf93f1d
 
 
 ### Manager View All Feedbacks: Using ViewSets
-GET http://127.0.0.1:8000/api/feedback
+GET https://mcsproject.pythonanywhere.com/api/feedback
 Content-Type: application/json
 Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
 
 
 ### Manager View Active Services
-GET http://127.0.0.1:8000/active-service
+GET https://mcsproject.pythonanywhere.com/active-service
 Content-Type: application/json
 Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
 
 ### Manager/SysAdmin View Pending Services
-GET http://127.0.0.1:8000/pending-service
+GET https://mcsproject.pythonanywhere.com/pending-service
 Content-Type: application/json
 Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
 
 ### Manager View Archived Services
-GET http://127.0.0.1:8000/archive-service
+GET https://mcsproject.pythonanywhere.com/archive-service
 Content-Type: application/json 
 Authorization: token 69c3dc587573fd7a6e77cba81526eb51f84ae8ec 
 
 ### Manager Archive Service: Required (id)
-POST http://127.0.0.1:8000/archive-service
+POST https://mcsproject.pythonanywhere.com/archive-service
 Content-Type: application/json 
 Authorization: token 69c3dc587573fd7a6e77cba81526eb51f84ae8ec 
 

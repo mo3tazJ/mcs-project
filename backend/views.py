@@ -205,7 +205,8 @@ def get_employee_devices(request, id):
 def get_employee_services(request, id):
     # emp = get_object_or_404(Employee, pk=request.data.get('id'))
     emp = get_object_or_404(Employee, pk=id)
-    empservices = Service.objects.filter(employee=emp)
+    empservices = Service.objects.filter(
+        employee=emp).filter(~Q(state='archived'))
     # srvserializer = ServiceSerializer(empservices, many=True)
     srvserializer = FullServiceSerializer(empservices, many=True)
     return Response({"services": srvserializer.data})
@@ -245,6 +246,24 @@ def edit_service_client(request, *args, **kwargs):
             vd = serializer.validated_data
             serializer.update(instance=service, validated_data=vd)
             serialized = FullServiceSerializer(service)
+            return Response({"message": "Service Updated", "data": serialized.data})
+    if service.state == 'rejected':
+        if serializer.is_valid(raise_exception=True):
+            vd = serializer.validated_data
+            serializer.update(instance=service, validated_data=vd)
+            # RePend The Rejected Service:
+            service.state = 'pending'
+            service.save()
+            serialized = FullServiceSerializer(service)
+            # Notification
+            manager = get_object_or_404(Employee, role__name='Manager')
+            fcm = manager.fcm_token
+            title = "Re-Pending Rejected Service"
+            body = f"Client '{service.employee}' Has Edited his previously Rejected Service '{service.name}', Check it"
+            # print(title)
+            # print(body)
+            # print(fcm)
+            sendFcm(fcm=fcm, title=title, body=body)
             return Response({"message": "Service Updated", "data": serialized.data})
     return Response({"message": "Invalid"}, status=status.HTTP_400_BAD_REQUEST)
 

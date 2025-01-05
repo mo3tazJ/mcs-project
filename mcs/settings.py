@@ -25,13 +25,14 @@ SECRET_KEY = config('SECRET_KEY')
 # Django Default Settings
 # DEBUG = True
 # Python Decouple Settings
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = config('DEBUG', default=True, cast=bool)
 
 # ALLOWED_HOSTS Settings
 # Django Default Settings
 # ALLOWED_HOSTS = ["*",]
 # Python Decouple Settings
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='127.0.0.1', cast=Csv())
+ALLOWED_HOSTS = config(
+    'ALLOWED_HOSTS', default='mcsproject.pythonanywhere.com', cast=Csv())
 
 
 # Application definition
@@ -100,22 +101,23 @@ WSGI_APPLICATION = 'mcs.wsgi.application'
 # }
 
 # Django Default Settings
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db1.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db1.sqlite3',
+#     }
+# }
 
 
 # Python Decouple Settings
-# DATABASES = {
-#     'default': config(
-#         'DATABASE_URL',
-#         default=BASE_DIR / 'db.sqlite3',
-#         cast=db_url
-#     )
-# }
+DATABASES = {
+    'default': config(
+        'DATABASE_URL',
+        default=BASE_DIR / 'db.sqlite3',
+        cast=db_url
+    )
+}
+
 # Python Decouple Default Settings
 # DATABASES = {
 #     'default': config(
