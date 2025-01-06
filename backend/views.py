@@ -23,8 +23,33 @@ def about(request):
     return render(request, "backend/about.html")
 
 
+# Admin Page
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated, IsAdminUser])
 def adminPage(request):
     return render(request, "backend/admin-page.html")
+
+
+# Manager Broadcast A Message
+@api_view(['POST'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated, IsAdminUser])
+def broadcast(request, *args, **kwargs):
+    # Broadcast:
+    try:
+        title = request.data.get('title')
+        body = request.data.get('body')
+        subs = Employee.objects.exclude(Q(role__name='Manager') | Q(
+            fcm_token__isnull=True) | Q(fcm_token=''))
+        for sub in subs:
+            fcm = sub.fcm_token
+            # print(f"{title} \n{body}")
+            sendFcm(fcm=fcm, title=title, body=body)
+        serialized = EmployeeSerializer(subs, many=True)
+        return Response({"message": "Broadcasted", "data": serialized.data}, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({"message": "Invalid", "Exception": e}, status=status.HTTP_400_BAD_REQUEST)
 
 
 ################################

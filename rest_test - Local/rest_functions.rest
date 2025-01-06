@@ -13,7 +13,7 @@ Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
 ### Get All Employees:
 GET http://127.0.0.1:8000/employee
 Content-Type: application/json
-Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
+Authorization: token 123246d394bc59fb48333f6e2d777f93e190cb71
 
 ### Get Tech Employees:
 GET http://127.0.0.1:8000/get-tech-employees
@@ -23,7 +23,7 @@ Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
 ### Get Employee By ID:
 GET http://127.0.0.1:8000/employee/10
 Content-Type: application/json
-Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
+Authorization: token 123246d394bc59fb48333f6e2d777f93e190cb71
 
 ### Get All Services:
 GET http://127.0.0.1:8000/service

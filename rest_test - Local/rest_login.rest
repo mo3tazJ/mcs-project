@@ -43,6 +43,6 @@ Content-Type: application/json
 ### Logout
 POST http://127.0.0.1:8000/logout
 Content-Type: application/json
-Authorization: token 9839e453dfdae6095d9b0027bb191cc56e899fae
+Authorization: token 4cb9b0731941c8e9c645e4b0ed1877e057c72670
 
-{"username": "alaa"}
+{"username": "george"}
