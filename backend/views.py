@@ -49,8 +49,8 @@ def broadcast(request, *args, **kwargs):
             fcm = sub.fcm_token
             # print(f"{title} \n{body}")
             sendFcm(fcm=fcm, title=title, body=body)
-        serialized = EmployeeSerializer(subs, many=True)
-        return Response({"message": "Broadcasted", "data": serialized.data}, status=status.HTTP_200_OK)
+        # serialized = EmployeeSerializer(subs, many=True)
+        return Response({"message": "Broadcasted"}, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({"message": "Invalid", "Exception": e}, status=status.HTTP_400_BAD_REQUEST)
 
