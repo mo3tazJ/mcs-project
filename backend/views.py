@@ -1,4 +1,5 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
@@ -24,11 +25,13 @@ def about(request):
 
 
 # Admin Page
-@api_view(['GET'])
-@authentication_classes([SessionAuthentication, TokenAuthentication])
-@permission_classes([IsAuthenticated, IsAdminUser])
+@login_required
 def adminPage(request):
     return render(request, "backend/admin-page.html")
+
+
+def admin_login(request):
+    return redirect("/admin/login/?next=/admin-page")
 
 
 # Manager Broadcast A Message
