@@ -74,12 +74,12 @@ def check_update(request):
     current = request.data.get('current')
     latest = latest_version
     if current < latest:
-        print(f"There Is A newer Version: {latest}")
-        print(latest_version_link)
-        return Response({"Details": f"There Is A newer Version: {latest}", "link": latest_version_link}, status=status.HTTP_200_OK)
+        # print(f"There Is A newer Version: {latest}")
+        # print(latest_version_link)
+        return Response({"message": f"There Is A newer Version: {latest}", "link": latest_version_link}, status=status.HTTP_200_OK)
     else:
-        print("You Have The Latest Version")
-        return Response({"Details": "You Have The Latest Version"}, status=status.HTTP_200_OK)
+        # print("You Have The Latest Version")
+        return Response({"message": "You Have The Latest Version"}, status=status.HTTP_200_OK)
 
 
 ################################

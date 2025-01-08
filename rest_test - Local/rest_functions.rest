@@ -131,4 +131,4 @@ POST http://127.0.0.1:8000/update
 Content-Type: application/json 
 Authorization: token a7921ac167bf57bbc1f6911293b1b54fbaf93f1d 
 
-{"current": "4"}
+{"current": "5.1"}
