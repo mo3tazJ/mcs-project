@@ -1,3 +1,4 @@
+from pathlib import Path
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from rest_framework.views import APIView
@@ -8,22 +9,21 @@ from rest_framework import status, viewsets
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from django.contrib.sessions.models import Session
-
 from .models import *
 from .serializers import *
 from .reports import *
 from .stats import *
 from backend.fcm.messaging import sendFcm
 from django.db.models import Q
-from urllib.request import urlopen
-import io
 
 
 #################
 ###  General  ###
 #################
-with urlopen("https://mcsproject.pythonanywhere.com/static/backend/apk/latest.txt") as f:
-    for line in io.TextIOWrapper(f, "utf-8"):
+BASE_DIR = Path(__file__).resolve().parent.parent
+with open(BASE_DIR / 'latest.txt') as f:
+    names = f.read()
+    for line in names:
         latest_version = line
 latest_version_link = f"https://mcsproject.pythonanywhere.com/static/backend/apk/ITMS{latest_version}.apk"
 
