@@ -22,9 +22,8 @@ from django.db.models import Q
 #################
 BASE_DIR = Path(__file__).resolve().parent.parent
 with open(BASE_DIR / 'latest.txt') as f:
-    names = f.read()
-    for line in names:
-        latest_version = line
+    line = f.readline()
+latest_version = line
 latest_version_link = f"https://mcsproject.pythonanywhere.com/static/backend/apk/ITMS{latest_version}.apk"
 
 
