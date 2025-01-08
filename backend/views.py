@@ -8,6 +8,7 @@ from rest_framework import status, viewsets
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from django.contrib.sessions.models import Session
+
 from .models import *
 from .serializers import *
 from .reports import *
@@ -18,8 +19,14 @@ from urllib.request import urlopen
 import io
 
 
+with urlopen("https://mcsproject.pythonanywhere.com/static/backend/apk/latest.txt") as f:
+    for line in io.TextIOWrapper(f, "utf-8"):
+        latest_version = line
+latest_version_link = f"https://mcsproject.pythonanywhere.com/static/backend/apk/ITMS{latest_version}.apk"
+
+
 def index(request):
-    return render(request, "backend/home.html")
+    return render(request, "backend/home.html", {"latest": latest_version, "link": latest_version_link})
 
 
 def about(request):
@@ -62,13 +69,8 @@ def broadcast(request, *args, **kwargs):
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def check_update(request):
-    with urlopen("https://mcsproject.pythonanywhere.com/static/backend/apk/latest.txt") as f:
-        for line in io.TextIOWrapper(f, "utf-8"):
-            latest = line
-
-    latest_version_link = f"https://mcsproject.pythonanywhere.com/static/backend/apk/ITMS{latest}.apk"
-
     current = request.data.get('current')
+    latest = latest_version
     if current < latest:
         print(f"There Is A newer Version: {latest}")
         print(latest_version_link)
