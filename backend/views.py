@@ -14,6 +14,8 @@ from .reports import *
 from .stats import *
 from backend.fcm.messaging import sendFcm
 from django.db.models import Q
+from urllib.request import urlopen
+import io
 
 
 def index(request):
@@ -53,6 +55,27 @@ def broadcast(request, *args, **kwargs):
         return Response({"message": "Broadcasted"}, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({"message": "Invalid", "Exception": e}, status=status.HTTP_400_BAD_REQUEST)
+
+
+# Check For APP Update:
+@api_view(['POST'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def check_update(request):
+    with urlopen("https://mcsproject.pythonanywhere.com/static/backend/apk/latest.txt") as f:
+        for line in io.TextIOWrapper(f, "utf-8"):
+            latest = line
+
+    latest_version_link = f"https://mcsproject.pythonanywhere.com/static/backend/apk/ITMS{latest}.apk"
+
+    current = request.data.get('current')
+    if current < latest:
+        print(f"There Is A newer Version: {latest}")
+        print(latest_version_link)
+        return Response({"Details": f"There Is A newer Version: {latest}", "link": latest_version_link}, status=status.HTTP_200_OK)
+    else:
+        print("You Have The Latest Version")
+        return Response({"Details": "You Have The Latest Version"}, status=status.HTTP_200_OK)
 
 
 ################################

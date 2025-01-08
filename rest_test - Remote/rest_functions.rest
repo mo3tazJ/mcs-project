@@ -126,3 +126,11 @@ Authorization: token 69c3dc587573fd7a6e77cba81526eb51f84ae8ec
 {"id": 46}
 
 
+### Check For APP Update: Required (current)
+POST https://mcsproject.pythonanywhere.com/update
+Content-Type: application/json 
+Authorization: token 69c3dc587573fd7a6e77cba81526eb51f84ae8ec 
+
+{"current": "4.9"}
+
+

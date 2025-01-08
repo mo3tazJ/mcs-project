@@ -1,6 +1,9 @@
 # firebase keyfile
 itms-77d5e-firebase-adminsdk-dfxpo-b47378749c.json
 
+# Test file
+test.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -24,6 +24,7 @@ urlpatterns = [
     path("admin-page", views.adminPage, name="admin-page"),
     path("broadcast", views.broadcast, name="broadcast"),
     path("login", views.log_in, name="login"),
+    path("update", views.check_update),
     re_path("accounts", views.admin_login),
     re_path("logout", views.log_out),
     path("get-tech-employees", views.get_tech_employees),

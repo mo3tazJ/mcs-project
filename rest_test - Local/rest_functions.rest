@@ -126,3 +126,9 @@ Authorization: token 69c3dc587573fd7a6e77cba81526eb51f84ae8ec
 {"id": 51}
 
 
+### Check For APP Update: Required (current)
+POST http://127.0.0.1:8000/update
+Content-Type: application/json 
+Authorization: token a7921ac167bf57bbc1f6911293b1b54fbaf93f1d 
+
+{"current": "5.0.1"}
