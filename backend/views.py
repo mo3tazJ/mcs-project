@@ -19,6 +19,9 @@ from urllib.request import urlopen
 import io
 
 
+#################
+###  General  ###
+#################
 with urlopen("https://mcsproject.pythonanywhere.com/static/backend/apk/latest.txt") as f:
     for line in io.TextIOWrapper(f, "utf-8"):
         latest_version = line
