@@ -106,7 +106,7 @@ Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
 ### Manager View Active Services
 GET http://127.0.0.1:8000/active-service
 Content-Type: application/json
-Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
+Authorization: token 123246d394bc59fb48333f6e2d777f93e190cb71
 
 ### Manager/SysAdmin View Pending Services
 GET http://127.0.0.1:8000/pending-service
@@ -116,12 +116,12 @@ Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
 ### Manager View Archived Services
 GET http://127.0.0.1:8000/archive-service
 Content-Type: application/json 
-Authorization: token 69c3dc587573fd7a6e77cba81526eb51f84ae8ec 
+Authorization: token 123246d394bc59fb48333f6e2d777f93e190cb71 
 
 ### Manager Archive Service: Required (id)
 POST http://127.0.0.1:8000/archive-service
 Content-Type: application/json 
-Authorization: token 69c3dc587573fd7a6e77cba81526eb51f84ae8ec 
+Authorization: token 123246d394bc59fb48333f6e2d777f93e190cb71 
 
 {"id": 51}
 

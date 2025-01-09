@@ -466,7 +466,7 @@ class ArchiveServiceAPIView(APIView):
         services = Service.objects.filter(state="archived")
         # serializer = ServiceSerializer(services, many=True)
         serializer = FullServiceSerializer(services, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response({"services": serializer.data}, status=status.HTTP_200_OK)
 
     def post(self, request, *args, **kwargs):
         service = get_object_or_404(Service, pk=request.data.get('id'))
