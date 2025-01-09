@@ -2,13 +2,13 @@
 ### Get All Departments:
 GET https://mcsproject.pythonanywhere.com/department
 Content-Type: application/json
-Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
+Authorization: token d2331c49844a3c6416c926099a5f488c73721365
 
 
 ### Get Department By ID:
 GET https://mcsproject.pythonanywhere.com/department/2
 Content-Type: application/json
-Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
+Authorization: token d2331c49844a3c6416c926099a5f488c73721365
 
 ### Get All Employees:
 GET https://mcsproject.pythonanywhere.com/employee
@@ -18,32 +18,32 @@ Authorization: token f3f3c7edbbba322c8b31f6f5c5d481d98ebf648c
 ### Get Tech Employees:
 GET https://mcsproject.pythonanywhere.com/get-tech-employees
 Content-Type: application/json
-Authorization: token f3f3c7edbbba322c8b31f6f5c5d481d98ebf648c
+Authorization: token d2331c49844a3c6416c926099a5f488c73721365
 
 ### Get Employee By ID:
 GET https://mcsproject.pythonanywhere.com/employee/10
 Content-Type: application/json
-Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
+Authorization: token d2331c49844a3c6416c926099a5f488c73721365
 
 ### Get All Services:
 GET https://mcsproject.pythonanywhere.com/service
 Content-Type: application/json
-Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
+Authorization: token d2331c49844a3c6416c926099a5f488c73721365
 
 ### Get Service By ID:
-GET https://mcsproject.pythonanywhere.com/service/47
+GET https://mcsproject.pythonanywhere.com/service/1
 Content-Type: application/json
-Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
+Authorization: token d2331c49844a3c6416c926099a5f488c73721365
 
 ### Get Employee Devices:
-GET https://mcsproject.pythonanywhere.com/get-employee-devices/9
+GET https://mcsproject.pythonanywhere.com/get-employee-devices/17
 Content-Type: application/json
-Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
+Authorization: token d2331c49844a3c6416c926099a5f488c73721365
 
 ### Get Employee Services:
-GET https://mcsproject.pythonanywhere.com/get-employee-services/9
+GET https://mcsproject.pythonanywhere.com/get-employee-services/17
 Content-Type: application/json
-Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
+Authorization: token d2331c49844a3c6416c926099a5f488c73721365
 
 ### Add Service: Required (name, description, employee, servie_type, servie_location, priority_level) (device if it is needed) 
 POST https://mcsproject.pythonanywhere.com/add-service
@@ -70,60 +70,60 @@ Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
 
 
 ### Tech View Approved Services:
-GET https://mcsproject.pythonanywhere.com/view-service-tech/approved/10
+GET https://mcsproject.pythonanywhere.com/view-service-tech/approved/4
 Content-Type: application/json 
-Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b 
+Authorization: token d2331c49844a3c6416c926099a5f488c73721365 
 
 
 ### Tech View Started Services:
-GET https://mcsproject.pythonanywhere.com/view-service-tech/started/10
+GET https://mcsproject.pythonanywhere.com/view-service-tech/started/4
 Content-Type: application/json 
-Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b 
+Authorization: token d2331c49844a3c6416c926099a5f488c73721365 
 
 
 ### Tech Process Service: Required (id, name, description, state) (diagnose,solution if state is ended)
 POST https://mcsproject.pythonanywhere.com/process-service-tech
 Content-Type: application/json 
-Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b 
+Authorization: token d2331c49844a3c6416c926099a5f488c73721365 
 
-{"id": 46, "name":"Ahmad Laptop Test Feedback3", "state": "ended", "diagnose": "diag", "solution": "solution", "notes": "notes"}
+{"id": 9, "name":"Ahmad Laptop Test Feedback3", "state": "ended", "diagnose": "diag", "solution": "solution", "notes": "notes"}
 
 
 ### Client Add Feedback: Required (name, service, rate)
 POST https://mcsproject.pythonanywhere.com/add-feedback
 Content-Type: application/json 
-Authorization: token a7921ac167bf57bbc1f6911293b1b54fbaf93f1d 
+Authorization: token d2331c49844a3c6416c926099a5f488c73721365 
 
-{"name": "feedback 46","service": 46,"rate": 4,"review": "Test Review for the test feedback"}
+{"name": "feedback 46","service": 9,"rate": 4,"review": "Test Review for the test feedback"}
 
 
 ### Manager View All Feedbacks: Using ViewSets
 GET https://mcsproject.pythonanywhere.com/api/feedback
 Content-Type: application/json
-Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
+Authorization: token d2331c49844a3c6416c926099a5f488c73721365
 
 
 ### Manager View Active Services
 GET https://mcsproject.pythonanywhere.com/active-service
 Content-Type: application/json
-Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
+Authorization: token d2331c49844a3c6416c926099a5f488c73721365
 
 ### Manager/SysAdmin View Pending Services
 GET https://mcsproject.pythonanywhere.com/pending-service
 Content-Type: application/json
-Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b
+Authorization: token d2331c49844a3c6416c926099a5f488c73721365
 
 ### Manager View Archived Services
 GET https://mcsproject.pythonanywhere.com/archive-service
 Content-Type: application/json 
-Authorization: token 69c3dc587573fd7a6e77cba81526eb51f84ae8ec 
+Authorization: token d2331c49844a3c6416c926099a5f488c73721365 
 
 ### Manager Archive Service: Required (id)
 POST https://mcsproject.pythonanywhere.com/archive-service
 Content-Type: application/json 
-Authorization: token 69c3dc587573fd7a6e77cba81526eb51f84ae8ec 
+Authorization: token d2331c49844a3c6416c926099a5f488c73721365 
 
-{"id": 46}
+{"id": 9}
 
 
 ### Check For APP Update: Required (current)
@@ -131,6 +131,6 @@ POST https://mcsproject.pythonanywhere.com/update
 Content-Type: application/json 
 Authorization: token d2331c49844a3c6416c926099a5f488c73721365 
 
-{"current": "5.0"}
+{"current": "5.5"}
 
 

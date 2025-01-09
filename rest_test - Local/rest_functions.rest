@@ -86,7 +86,7 @@ POST http://127.0.0.1:8000/process-service-tech
 Content-Type: application/json 
 Authorization: token 92905dd20f35324056cdf4c5283e1ed014c7ce4b 
 
-{"id": 51, "state": "ended", "diagnose": "diag", "solution": "solution", "notes": "notes"}
+{"id": 48, "state": "ended", "diagnose": "diag", "solution": "solution", "notes": "notes"}
 
 
 ### Client Add Feedback: Required (name, service, rate)
@@ -94,7 +94,7 @@ POST http://127.0.0.1:8000/add-feedback
 Content-Type: application/json 
 Authorization: token a7921ac167bf57bbc1f6911293b1b54fbaf93f1d 
 
-{"name": "feedback 51","service": 57,"rate": 1,"review": "Test Review for the test feedback"}
+{"name": "feedback 51","service": 48,"rate": 3,"review": "Test Review for the test feedback"}
 
 
 ### Manager View All Feedbacks: Using ViewSets
@@ -123,7 +123,7 @@ POST http://127.0.0.1:8000/archive-service
 Content-Type: application/json 
 Authorization: token 123246d394bc59fb48333f6e2d777f93e190cb71 
 
-{"id": 51}
+{"id": 48}
 
 
 ### Check For APP Update: Required (current)

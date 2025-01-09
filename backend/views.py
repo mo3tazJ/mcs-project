@@ -470,12 +470,14 @@ class ArchiveServiceAPIView(APIView):
 
     def post(self, request, *args, **kwargs):
         service = get_object_or_404(Service, pk=request.data.get('id'))
+
+        if service.state == "archived":
+            return Response({"message": "Service Already Archived"}, status=status.HTTP_400_BAD_REQUEST)
         if service.state == "closed":
             service.state = 'archived'
             service.save()
             return Response({"message": "Service Archived"}, status=status.HTTP_200_OK)
-        if service.state == "archived":
-            return Response({"message": "Service Already Archived"}, status=status.HTTP_400_BAD_REQUEST)
+
         return Response({"message": "Service isn't Closed, Can not be Archived"}, status=status.HTTP_400_BAD_REQUEST)
 
 
