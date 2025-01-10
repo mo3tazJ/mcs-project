@@ -12,8 +12,7 @@ class EmployeeAdmin(admin.ModelAdmin):
     list_display = ("__str__", "username", "department",
                     "role", "mobile", "email", "is_staff")
     fields = ["username", "password", "mobile", "first_name", "last_name", "email", "department",
-              "role", "about", "is_superuser", "is_staff", "is_active", "date_joined", "last_login", "groups", "user_permissions"]
-    # , "group", "permision"
+              "role", "about", "is_superuser", "is_staff", "is_active", "date_joined", "last_login", "groups", "user_permissions", 'fcm_token']
     readonly_fields = ["date_joined", "last_login"]
 
 

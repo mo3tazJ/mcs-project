@@ -15,18 +15,12 @@ from .reports import *
 from .stats import *
 from backend.fcm.messaging import sendFcm
 from django.db.models import Q
+from .ver_check import *
 
 
 #################
 ###  General  ###
 #################
-BASE_DIR = Path(__file__).resolve().parent.parent
-with open(BASE_DIR / 'latest.txt') as f:
-    line = f.readline()
-latest_version = line
-latest_version_link = f"https://mcsproject.pythonanywhere.com/static/backend/apk/ITMS{latest_version}.apk"
-
-
 def index(request):
     return render(request, "backend/home.html", {"latest": latest_version, "link": latest_version_link})
 
@@ -58,10 +52,12 @@ def broadcast(request, *args, **kwargs):
             fcm_token__isnull=True) | Q(fcm_token=''))
         for sub in subs:
             fcm = sub.fcm_token
-            # print(f"{title} \n{body}")
-            sendFcm(fcm=fcm, title=title, body=body)
-        # serialized = EmployeeSerializer(subs, many=True)
-        return Response({"message": "Broadcasted"}, status=status.HTTP_200_OK)
+            print(f"{title} - {body}")
+            print(f"user: {sub.username}")
+            print(f"{sub.fcm_token}")
+            # sendFcm(fcm=fcm, title=title, body=body)
+        serialized = EmployeeSerializer(subs, many=True)
+        return Response({"message": "Broadcasted", "subs": serialized.data}, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({"message": "Invalid", "Exception": e}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -73,7 +69,12 @@ def broadcast(request, *args, **kwargs):
 def check_update(request):
     current = request.data.get('current')
     latest = latest_version
-    if current < latest:
+    if latest == "X":
+        # print(f"Updating System, Will be available soon")
+        # print(latest_version_link)
+        return Response({"message": f"Updating System Now, Will be available soon", "link": latest_version_link}, status=status.HTTP_404_NOT_FOUND)
+
+    elif current < latest:
         # print(f"There Is A newer Version: {latest}")
         # print(latest_version_link)
         return Response({"message": f"There Is A newer Version: {latest}", "link": latest_version_link}, status=status.HTTP_200_OK)

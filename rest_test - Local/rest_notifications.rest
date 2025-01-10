@@ -1,7 +1,0 @@
-
-### Manager Broadcast A Message
-POST http://127.0.0.1:8000/broadcast
-Content-Type: application/json
-Authorization: token 123246d394bc59fb48333f6e2d777f93e190cb71
-
-{"title": "New Version", "body": "Download it From The Website"}

@@ -2,7 +2,7 @@
 itms-77d5e-firebase-adminsdk-dfxpo-b47378749c.json
 
 # Test file
-test.py
+test_func.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -11,6 +11,12 @@ __pycache__/
 
 # C extensions
 *.so
+
+# Rest Test
+.rest_test - Local
+.rest_test - Local/
+.rest_test - Remote
+.rest_test - Remote/
 
 # Distribution / packaging
 .Python

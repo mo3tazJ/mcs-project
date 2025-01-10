@@ -11,6 +11,7 @@ customizations. For example, a badge is added to messages that are sent to iOS d
 import argparse
 import json
 import datetime
+from pathlib import Path
 from google.oauth2 import service_account
 from google import *
 import google.auth.transport.requests
@@ -27,13 +28,16 @@ SCOPES = ['https://www.googleapis.com/auth/firebase.messaging']
 
 # [START retrieve_access_token]
 
+cred_file_dir = Path(__file__).resolve().parent.parent.parent
+cred_file_path = cred_file_dir / 'itms-77d5e-firebase-adminsdk-dfxpo-b47378749c.json'
+
 
 def _get_access_token():
     """Retrieve a valid access token that can be used to authorize requests.
     :return: Access token.
     """
     credentials = service_account.Credentials.from_service_account_file(
-        'itms-77d5e-firebase-adminsdk-dfxpo-b47378749c.json', scopes=SCOPES)
+        cred_file_path, scopes=SCOPES)
     # credentials = service_account.Credentials.from_service_account_file(
     #   'sahab-5dcad-firebase-adminsdk-pds1o-032ca24d38_old.json', scopes=SCOPES)
     request = google.auth.transport.requests.Request()
