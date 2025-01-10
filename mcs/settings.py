@@ -1,9 +1,7 @@
 from pathlib import Path
-# from unipath import Path
 from decouple import config, Csv
-# from unipath import Path
 from dj_database_url import parse as db_url
-
+# from unipath import Path
 import os
 # from os import getenv
 
