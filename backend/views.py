@@ -55,7 +55,7 @@ def broadcast(request, *args, **kwargs):
             print(f"{title} - {body}")
             print(f"user: {sub.username}")
             print(f"{sub.fcm_token}")
-            # sendFcm(fcm=fcm, title=title, body=body)
+            sendFcm(fcm=fcm, title=title, body=body)
         serialized = EmployeeSerializer(subs, many=True)
         return Response({"message": "Broadcasted", "subs": serialized.data}, status=status.HTTP_200_OK)
     except Exception as e:
@@ -94,11 +94,10 @@ def log_in(request):
         return Response({"detail": "Not Allowed"}, status=status.HTTP_400_BAD_REQUEST)
     token, created = Token.objects.get_or_create(user=employee)
     # session_hash = employee.get_session_auth_hash()
-
-    serializer = EmployeeSerializer(instance=employee)
     employee.fcm_token = request.data.get('fcm_token')
     employee.save()
-    return Response({"token": token.key, "user": serializer.data})
+    serialized = EmployeeSerializer(instance=employee)
+    return Response({"token": token.key, "user": serialized.data})
 
 
 @api_view(['POST'])
@@ -107,17 +106,13 @@ def log_in(request):
 def log_out(request):
     employee = get_object_or_404(
         Employee, username=request.data.get('username'))
-    # token = Token.objects.get(user=employee)
-    # token.delete()
     # session_hash = employee.get_session_auth_hash()
-    if request.user.auth_token:
-        request.user.auth_token.delete()
-        if employee.fcm_token:
-            employee.fcm_token = ""
-            employee.save()
-        return Response({"Details": "Logged Out!"}, status=status.HTTP_200_OK)
-    else:
-        return Response({"Details": "Not Logged In!"}, status=status.HTTP_400_BAD_REQUEST)
+    token = Token.objects.get(user=employee)
+    token.delete()
+    if employee.fcm_token:
+        employee.fcm_token = ""
+        employee.save()
+    return Response({"Details": "Logged Out!"}, status=status.HTTP_200_OK)
 
 
 ###################
